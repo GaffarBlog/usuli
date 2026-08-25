@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 $articles = [
@@ -144,3 +145,5 @@ Route::get('/blog', function () use ($articles, $bnDigits, $navItems) {
         'extraArticles' => array_slice($articles, 6),
     ]);
 })->name('blog');
+
+Route::get('/admin', DashboardController::class)->name('admin.dashboard');
