@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    /* Usuli type — Bengali literary journal */
+    --font-sans:
+        'Noto Sans Bengali', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Noto Serif Bengali', Georgia, serif;
+
+    /* Brand palette (from logo) */
+    --color-brand: #2b8ca4;
+    --color-brand-deep: #1e6d80;
+    --color-brand-soft: #eef4f5;
+    --color-brand-line: #d6e6e9;
+
+    /* Ink & neutrals */
+    --color-ink: #191c1d;
+    --color-body: #3b4143;
+    --color-faint: #7c8388;
+    --color-page: #fafaf8;
+    --color-hairline: #eae9e4;
+
+    /* Dark footer */
+    --color-footer: #14181a;
+    --color-footer-ink: #e9ecec;
+    --color-footer-mut: #8b9698;
+
+    /* Calligraphic logo draw-in */
+    --animate-draw: draw 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s forwards;
+    --animate-fade-in-late: fade-in-late 0.6s ease 1.15s forwards;
+
+    @keyframes draw {
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @keyframes fade-in-late {
+        to {
+            opacity: 1;
+        }
+    }
+}
+
+@layer base {
+    :focus-visible {
+        outline: 2px solid var(--color-brand);
+        outline-offset: 3px;
+        border-radius: 3px;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+}
+
+/* Centered page shell with fluid gutters */
+@utility shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1240px;
+    padding-inline: clamp(20px, 5vw, 44px);
+}
+
+/* Scroll-reveal state paired with the jQuery script */
+@utility reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+        opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    @media (prefers-reduced-motion: reduce) {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

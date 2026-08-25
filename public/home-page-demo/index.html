@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="bn" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>উসুলি — বাংলায় গল্প, ভাবনা ও মানুষের কথা</title>
+  <meta name="description" content="উসুলি একটি স্বাধীন বাংলা ডিজিটাল জার্নাল—নির্বাচিত গল্প, ভাবনা ও মানুষের কথা।" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">মূল অংশে যান</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container site-header__inner">
+      <a class="brand" href="#" aria-label="উসুলি — প্রচ্ছদ">
+        <svg class="brand__mark" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
+          <path class="brand__stroke" d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" />
+          <path class="brand__accent" d="M40 6 C 42 4 45 4 46 7" />
+        </svg>
+        <span class="brand__name">উসুলি</span>
+      </a>
+
+      <nav class="nav" aria-label="প্রধান নেভিগেশন">
+        <ul class="nav__list">
+          <li><a class="nav__link is-active" href="#">প্রচ্ছদ</a></li>
+          <li><a class="nav__link" href="#">গল্প</a></li>
+          <li><a class="nav__link" href="#">মতামত</a></li>
+          <li><a class="nav__link" href="#">জীবনযাপন</a></li>
+          <li><a class="nav__link" href="#">সংস্কৃতি</a></li>
+          <li><a class="nav__link" href="#">প্রযুক্তি</a></li>
+          <li><a class="nav__link" href="#">ভ্রমণ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="icon-btn" type="button" aria-label="খুঁজুন">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        </button>
+        <button class="icon-btn icon-btn--menu" type="button" aria-label="মেনু" aria-expanded="false" aria-controls="mobileNav" id="menuToggle">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile navigation panel -->
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <nav aria-label="মোবাইল নেভিগেশন">
+        <ul class="mobile-nav__list">
+          <li><a href="#">প্রচ্ছদ</a></li>
+          <li><a href="#">গল্প</a></li>
+          <li><a href="#">মতামত</a></li>
+          <li><a href="#">জীবনযাপন</a></li>
+          <li><a href="#">সংস্কৃতি</a></li>
+          <li><a href="#">প্রযুক্তি</a></li>
+          <li><a href="#">ভ্রমণ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO / FEATURED ============ -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="container hero__inner">
+        <figure class="hero__media ph ph--hero reveal">
+          <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1400&q=70"
+               alt="সন্ধ্যার শহর—আলো-ছায়ায় ঢাকা পথঘাট" loading="eager" />
+        </figure>
+
+        <div class="hero__body">
+          <span class="eyebrow reveal"><span class="eyebrow__tick" aria-hidden="true"></span>বিশেষ লেখা</span>
+          <h1 class="hero__title reveal" id="heroTitle">শহরের ব্যস্ততার মাঝেও হারিয়ে যাচ্ছে না যে গল্পগুলো</h1>
+          <p class="hero__excerpt reveal">সময়ের পরিবর্তনের সঙ্গে বদলে যাচ্ছে আমাদের জীবন, কিন্তু কিছু গল্প এখনো মানুষের স্মৃতি ও অনুভূতির সঙ্গে জড়িয়ে থাকে।</p>
+          <div class="hero__meta reveal">
+            <span class="meta">২৫ আগস্ট ২০২৬</span>
+            <span class="meta__dot" aria-hidden="true">·</span>
+            <span class="meta">৬ মিনিট পড়তে সময় লাগবে</span>
+          </div>
+          <a class="read-link reveal" href="#">পড়ুন <span class="read-link__arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LATEST ARTICLES ============ -->
+    <section class="section" aria-labelledby="latestTitle">
+      <div class="container">
+        <header class="section__head reveal">
+          <h2 class="section__title" id="latestTitle"><span class="section__marker" aria-hidden="true"></span>সাম্প্রতিক লেখা</h2>
+          <a class="section__more read-link read-link--sm" href="#">সব লেখা <span aria-hidden="true">→</span></a>
+        </header>
+
+        <div class="grid grid--3">
+          <article class="card reveal">
+            <a class="card__media ph ph--a" href="#" tabindex="-1" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1501691223387-dd0500403074?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <span class="card__cat">ভ্রমণ</span>
+              <h3 class="card__title"><a href="#">বৃষ্টিভেজা বিকেলে ঢাকার অন্য এক শহর</a></h3>
+              <p class="card__excerpt">বৃষ্টি নামলেই শহরের চেনা রাস্তাগুলো যেন অন্য এক ভাষায় কথা বলে ওঠে।</p>
+              <div class="card__meta"><span class="meta">২৩ আগস্ট ২০২৬</span><span class="meta__dot">·</span><span class="meta">৫ মিনিট</span></div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <a class="card__media ph ph--b" href="#" tabindex="-1" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1524578271613-d550eacf6090?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <span class="card__cat">সংস্কৃতি</span>
+              <h3 class="card__title"><a href="#">বাংলার বইয়ের ঘ্রাণ এখনো কেন এত আপন</a></h3>
+              <p class="card__excerpt">পুরনো পাতার গন্ধে লুকিয়ে থাকে সময়, স্মৃতি আর অসংখ্য নিঃশব্দ বিকেল।</p>
+              <div class="card__meta"><span class="meta">২১ আগস্ট ২০২৬</span><span class="meta__dot">·</span><span class="meta">৭ মিনিট</span></div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <a class="card__media ph ph--c" href="#" tabindex="-1" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <span class="card__cat">প্রযুক্তি</span>
+              <h3 class="card__title"><a href="#">প্রযুক্তির ভেতরেও মানুষ খুঁজে ফেরে মানুষকে</a></h3>
+              <p class="card__excerpt">যন্ত্রের ভিড়ে দাঁড়িয়েও আমরা খুঁজি একটুখানি উষ্ণতা, একটুখানি সংযোগ।</p>
+              <div class="card__meta"><span class="meta">১৯ আগস্ট ২০২৬</span><span class="meta__dot">·</span><span class="meta">৪ মিনিট</span></div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <a class="card__media ph ph--d" href="#" tabindex="-1" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <span class="card__cat">জীবনযাপন</span>
+              <h3 class="card__title"><a href="#">এক কাপ চায়ের সঙ্গে কিছু অসমাপ্ত গল্প</a></h3>
+              <p class="card__excerpt">ধোঁয়া ওঠা কাপের পাশে বসে থাকে যত অসমাপ্ত কথা আর অলস দুপুর।</p>
+              <div class="card__meta"><span class="meta">১৭ আগস্ট ২০২৬</span><span class="meta__dot">·</span><span class="meta">৬ মিনিট</span></div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <a class="card__media ph ph--e" href="#" tabindex="-1" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <span class="card__cat">গল্প</span>
+              <h3 class="card__title"><a href="#">পুরনো রেডিওর গান আর একটি নিঃশব্দ দুপুর</a></h3>
+              <p class="card__excerpt">ভাঙা রেডিওর সুরে ফিরে আসে হারিয়ে যাওয়া এক শান্ত সময়ের ছবি।</p>
+              <div class="card__meta"><span class="meta">১৫ আগস্ট ২০২৬</span><span class="meta__dot">·</span><span class="meta">৮ মিনিট</span></div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <a class="card__media ph ph--f" href="#" tabindex="-1" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <span class="card__cat">মতামত</span>
+              <h3 class="card__title"><a href="#">শহরের আলো নিভে গেলে জেগে ওঠে যে জীবন</a></h3>
+              <p class="card__excerpt">রাত গভীর হলে শহরের আরেকটি রূপ ধীরে ধীরে চোখের সামনে খুলে যায়।</p>
+              <div class="card__meta"><span class="meta">১২ আগস্ট ২০২৬</span><span class="meta__dot">·</span><span class="meta">৫ মিনিট</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED STORY ============ -->
+    <section class="feature" aria-labelledby="featureTitle">
+      <div class="feature__media ph ph--feature">
+        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=72" alt="ভোরের নদী ও তীরে জেগে ওঠা জনপদ" loading="lazy" />
+        <div class="feature__scrim" aria-hidden="true"></div>
+      </div>
+      <div class="container feature__overlay">
+        <div class="feature__content reveal">
+          <span class="eyebrow eyebrow--light"><span class="eyebrow__tick" aria-hidden="true"></span>নির্বাচিত</span>
+          <h2 class="feature__title" id="featureTitle">যে নদী বদলে দিয়েছে একটি জনপদের গল্প</h2>
+          <p class="feature__desc">নদীর দুই তীরে গড়ে ওঠা জীবন, তার স্রোতের সঙ্গে বদলে যাওয়া সময় আর মানুষের গল্প—একটি দীর্ঘ অনুসন্ধান, যেখানে জল আর মাটি মিলেমিশে লিখেছে এক জনপদের ইতিহাস।</p>
+          <a class="read-link read-link--light" href="#">সম্পূর্ণ গল্প পড়ুন <span class="read-link__arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATEGORIES ============ -->
+    <section class="section section--tight" aria-labelledby="topicsTitle">
+      <div class="container">
+        <header class="section__head section__head--center reveal">
+          <h2 class="section__title" id="topicsTitle"><span class="section__marker" aria-hidden="true"></span>বিষয়</h2>
+        </header>
+        <ul class="topics reveal">
+          <li><a class="pill" href="#">গল্প</a></li>
+          <li><a class="pill" href="#">মতামত</a></li>
+          <li><a class="pill" href="#">সংস্কৃতি</a></li>
+          <li><a class="pill" href="#">জীবনযাপন</a></li>
+          <li><a class="pill" href="#">প্রযুক্তি</a></li>
+          <li><a class="pill" href="#">ভ্রমণ</a></li>
+          <li><a class="pill" href="#">বই</a></li>
+          <li><a class="pill" href="#">প্রকৃতি</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ POPULAR / EDITOR'S PICKS ============ -->
+    <section class="section" aria-label="জনপ্রিয় লেখা ও সম্পাদকের পছন্দ">
+      <div class="container">
+        <div class="lists">
+          <div class="lists__col reveal">
+            <h2 class="section__title section__title--sm"><span class="section__marker" aria-hidden="true"></span>জনপ্রিয় লেখা</h2>
+            <ol class="ranklist">
+              <li class="ranklist__item"><span class="ranklist__num">০১</span><a class="ranklist__link" href="#">শহরের ভেতরে হারিয়ে যাওয়া কিছু বিকেল</a></li>
+              <li class="ranklist__item"><span class="ranklist__num">০২</span><a class="ranklist__link" href="#">কেন আমরা এখনো চিঠি লিখতে ভালোবাসি</a></li>
+              <li class="ranklist__item"><span class="ranklist__num">০৩</span><a class="ranklist__link" href="#">বাংলাদেশের ছোট শহরের বড় গল্প</a></li>
+              <li class="ranklist__item"><span class="ranklist__num">০৪</span><a class="ranklist__link" href="#">বই পড়ার অভ্যাস কীভাবে বদলে যাচ্ছে</a></li>
+            </ol>
+          </div>
+
+          <div class="lists__col reveal">
+            <h2 class="section__title section__title--sm"><span class="section__marker" aria-hidden="true"></span>সম্পাদকের পছন্দ</h2>
+            <ol class="ranklist ranklist--muted">
+              <li class="ranklist__item"><span class="ranklist__num">০১</span><a class="ranklist__link" href="#">মেঘের শহরে এক ভবঘুরে বিকেল</a></li>
+              <li class="ranklist__item"><span class="ranklist__num">০২</span><a class="ranklist__link" href="#">ভাষার ভেতরে লুকিয়ে থাকা মানুষ</a></li>
+              <li class="ranklist__item"><span class="ranklist__num">০৩</span><a class="ranklist__link" href="#">যে চিঠিগুলো কখনো পাঠানো হয়নি</a></li>
+              <li class="ranklist__item"><span class="ranklist__num">০৪</span><a class="ranklist__link" href="#">সময়ের স্রোতে ভেসে যাওয়া নাম</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="newsletter" aria-labelledby="nlTitle">
+      <div class="container newsletter__inner reveal">
+        <div class="newsletter__mark" aria-hidden="true">
+          <svg viewBox="0 0 60 90"><path d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" /></svg>
+        </div>
+        <h2 class="newsletter__title" id="nlTitle">নতুন লেখা আপনার ইনবক্সে</h2>
+        <p class="newsletter__desc">নির্বাচিত বাংলা গল্প, ভাবনা ও নতুন লেখার খবর পেতে আমাদের সঙ্গে থাকুন।</p>
+        <form class="newsletter__form" novalidate>
+          <label class="visually-hidden" for="nlEmail">আপনার ইমেইল</label>
+          <input class="newsletter__input" id="nlEmail" type="email" name="email" placeholder="আপনার ইমেইল" autocomplete="email" />
+          <button class="btn btn--primary" type="submit">সাবস্ক্রাইব করুন</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <a class="brand brand--footer" href="#" aria-label="উসুলি — প্রচ্ছদ">
+          <svg class="brand__mark" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
+            <path class="brand__stroke" d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" />
+            <path class="brand__accent" d="M40 6 C 42 4 45 4 46 7" />
+          </svg>
+          <span class="brand__name">উসুলি</span>
+        </a>
+        <p class="site-footer__desc">বাংলায় গল্প, ভাবনা ও মানুষের কথা।</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="ফুটার নেভিগেশন">
+        <a href="#">প্রচ্ছদ</a>
+        <a href="#">আমাদের সম্পর্কে</a>
+        <a href="#">যোগাযোগ</a>
+        <a href="#">গোপনীয়তা</a>
+        <a href="#">শর্তাবলি</a>
+      </nav>
+
+      <div class="social" aria-label="সামাজিক মাধ্যম">
+        <a class="social__link" href="#" aria-label="ফেসবুক"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9V7c0-1 .3-1.5 1.6-1.5H17V2.5h-2.4C11.9 2.5 11 4 11 6.3V9H8.5v3H11v9.5h3V12h2.2l.4-3H14z"/></svg></a>
+        <a class="social__link" href="#" aria-label="এক্স"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.3-5.6L6.4 21H3.3l7-8L2.6 3h6l3.9 5.1L17.5 3zm-1 16h1.6L7.6 4.6H5.9L16.5 19z"/></svg></a>
+        <a class="social__link" href="#" aria-label="ইনস্টাগ্রাম"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a class="social__link" href="#" aria-label="ইউটিউব"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2l5 2.8-5 2.8V9.2z" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+
+    <div class="container site-footer__bottom">
+      <p>© ২০২৬ উসুলি। সর্বস্বত্ব সংরক্ষিত।</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
