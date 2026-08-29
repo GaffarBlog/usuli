@@ -25,6 +25,7 @@
         $menuItemActive = 'flex items-center gap-3 rounded-lg bg-brand/15 px-3.5 py-2.5 text-[0.95rem] font-semibold text-white transition-colors duration-200';
         $iconBtn = 'grid h-10 w-10 place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep';
         $navIcon = 'h-[18px] w-[18px] shrink-0';
+        $currentRoute = request()->route()->getName();
     @endphp
 
     <!-- ============ SIDEBAR ============ -->
@@ -54,8 +55,8 @@
         <nav class="flex flex-col gap-1 px-3" aria-label="অ্যাডমিন মেনু">
             <p class="px-3.5 pb-2 pt-3 text-[0.72rem] font-semibold tracking-[0.14em] text-footer-mut">মেনু</p>
 
-            <a href="#" aria-current="page" class="{{ $menuItemActive }}">
-                <svg class="{{ $navIcon }} text-[#4fb6cf]" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            <a href="{{ route('admin.dashboard') }}" aria-current="{{ $currentRoute === 'admin.dashboard' ? 'page' : 'false' }}" class="{{ $currentRoute === 'admin.dashboard' ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ $currentRoute === 'admin.dashboard' ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
                      fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/>
                     <rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>
@@ -81,8 +82,8 @@
                 সব লেখা
             </a>
 
-            <a href="#" class="{{ $menuItem }}">
-                <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            <a href="{{ route('admin.categories.index') }}" class="{{ str_starts_with($currentRoute, 'admin.categories') ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.categories') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
                      fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/>
                     <circle cx="7.5" cy="7.5" r="1.2"/>
