@@ -148,6 +148,10 @@ Route::get('/blog', function () use ($articles, $bnDigits, $navItems) {
     ]);
 })->name('blog');
 
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
 Route::get('/admin', DashboardController::class)->name('admin.dashboard');
 
 Route::resource('admin/categories', CategoryController::class)

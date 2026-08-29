@@ -65,6 +65,15 @@
                         <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
                     </svg>
                 </button>
+                <a href="{{ route('login') }}"
+                   class="grid h-[42px] w-[42px] place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep"
+                   aria-label="লগইন">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                         fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
                 <button type="button" aria-label="মেনু" aria-expanded="false" aria-controls="mobileNav" id="menuToggle"
                         class="grid h-[42px] w-[42px] place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep min-[1001px]:hidden">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
