@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'username', 'email_verified_at', 'password', 'images', 'phone', 'date_of_birth', 'gender', 'country', 'city', 'zip', 'address', 'status', 'role_id', 'locale'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -28,5 +28,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // relation with role
+    public function Role()
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id')->withoutGlobalScope('superAdmin');
     }
 }

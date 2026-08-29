@@ -2,17 +2,55 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\admin\RoleController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('web')->group(function () {
-    Route::get('/admin', DashboardController::class)->name('admin.dashboard');
+Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function () {
 
-    Route::resource('admin/categories', CategoryController::class)
-        ->parameters(['admin/categories' => 'category'])
-        ->names('admin.categories');
+    // Mange login page
+    Route::controller(LoginController::class)->group(function () {
+        Route::get('/login', 'index')->name('admin.login.index');
+        Route::post('/login', 'login')->name('admin.login.post');
+    });
 
-    Route::resource('admin/posts', PostController::class)
-        ->parameters(['admin/posts' => 'post'])
-        ->names('admin.posts');
+    // User roles and permissions routes
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('/roles', 'index')->name('admin.roles.view');
+        Route::get('/roles/create', 'create_page')->name('admin.roles.createPage');
+        Route::post('/roles/create', 'create')->name('admin.roles.create');
+        Route::post('/roles/status', 'change_status')->name('admin.roles.status');
+        Route::get('/roles-edit/{id}', 'edit')->name('admin.roles.edit');
+        Route::post('/roles-update', 'update')->name('admin.roles.update');
+        Route::post('/roles-delete', 'delete')->name('admin.roles.delete');
+    });
+
+    // Dashboard
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.dashboard.view');
+        Route::get('/logout', 'logout')->name('admin.logout');
+    });
+
+    // Route::get('/', [DashboardController::class, '__invoke'])->name('admin.dashboard');
+
+    // Posts
+    Route::controller(PostController::class)->prefix('posts')->name('admin.posts.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{post}/edit', 'edit')->name('edit');
+        Route::put('/{post}', 'update')->name('update');
+        Route::delete('/{post}', 'destroy')->name('destroy');
+    });
+
+    // Categories
+    Route::controller(CategoryController::class)->prefix('categories')->name('admin.categories.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{category}/edit', 'edit')->name('edit');
+        Route::put('/{category}', 'update')->name('update');
+        Route::delete('/{category}', 'destroy')->name('destroy');
+    });
 });
