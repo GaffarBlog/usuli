@@ -64,8 +64,8 @@
                 ড্যাশবোর্ড
             </a>
 
-            <a href="#" class="{{ $menuItem }}">
-                <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            <a href="{{ route('admin.posts.create') }}" class="{{ $currentRoute === 'admin.posts.create' ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ $currentRoute === 'admin.posts.create' ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
                      fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>
                     <path d="M12 12v6"/><path d="M9 15h6"/>
@@ -73,8 +73,8 @@
                 নতুন লেখা
             </a>
 
-            <a href="#" class="{{ $menuItem }}">
-                <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            <a href="{{ route('admin.posts.index') }}" class="{{ str_starts_with($currentRoute, 'admin.posts') ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.posts') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
                      fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/>
                     <path d="M3.7 6h.01"/><path d="M3.7 12h.01"/><path d="M3.7 18h.01"/>
