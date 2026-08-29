@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function () {
@@ -15,6 +16,16 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
         Route::post('/login', 'login')->name('admin.login.post');
     });
 
+    // User management routes
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index')->name('admin.users.view');
+        Route::get('/users/create', 'create')->name('admin.users.createPage');
+        Route::post('/users/create', 'create_user')->name('admin.users.create');
+        Route::get('/users-edit/{id}', 'edit')->name('admin.users.edit');
+        Route::post('/users-update', 'update')->name('admin.users.update');
+        Route::post('/users-delete', 'delete')->name('admin.users.delete');
+        Route::post('/users-bulk-delete', 'bulkDelete')->name('admin.users.bulkDelete');
+    });
     // User roles and permissions routes
     Route::controller(RoleController::class)->group(function () {
         Route::get('/roles', 'index')->name('admin.roles.view');

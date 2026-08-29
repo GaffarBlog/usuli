@@ -112,8 +112,8 @@
                 গণমাধ্যম
             </a>
 
-            <a href="#" class="{{ $menuItem }}">
-                <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <a href="{{ route('admin.users.view') }}" class="{{ str_starts_with($currentRoute, 'admin.users') ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.users') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="8" r="3.2" />
                     <path d="M3.5 19.5c.6-3 2.9-4.5 5.5-4.5s4.9 1.5 5.5 4.5" />
                     <path d="M16 5.6a3.2 3.2 0 0 1 0 4.9" />
