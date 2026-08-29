@@ -14,7 +14,7 @@
     <!-- ============ PAGE HEADER ============ -->
     <section class="pb-[clamp(28px,4vw,48px)] pt-[clamp(40px,6vw,72px)]">
         <div class="shell">
-            <a href="{{ route('home') }}" class="reveal mb-[26px] inline-flex w-fit items-center gap-1.5 text-[0.9rem] font-semibold text-brand-deep transition-colors duration-300 hover:text-ink">
+            <a href="{{ route('home.index') }}" class="reveal mb-[26px] inline-flex w-fit items-center gap-1.5 text-[0.9rem] font-semibold text-brand-deep transition-colors duration-300 hover:text-ink">
                 <span aria-hidden="true">←</span> প্রচ্ছদে ফিরে যান
             </a>
 

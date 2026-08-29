@@ -27,7 +27,7 @@
         <div class="w-full max-w-[440px]">
             {{-- Logo --}}
             <div class="mb-10 flex justify-center">
-                <a href="{{ route('home') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
+                <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
                     <svg class="h-[54px] w-[36px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
                         <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
                               d="{{ $brandMarkPath }}"

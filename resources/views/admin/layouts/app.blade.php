@@ -32,7 +32,7 @@
     <aside id="adminSidebar" data-state="closed"
            class="fixed inset-y-0 left-0 z-[300] flex w-[264px] -translate-x-full flex-col overflow-y-auto border-r border-white/[0.06] bg-footer transition-transform duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] will-change-transform data-[state=open]:translate-x-0 lg:translate-x-0">
         <div class="flex items-center justify-between gap-3 px-5 pb-4 pt-6">
-            <a href="{{ route('home') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
+            <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
                 <svg class="h-[42px] w-[28px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
                     <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
                           d="{{ $brandMarkPath }}"

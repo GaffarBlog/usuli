@@ -34,7 +34,7 @@
     <!-- ============ HEADER ============ -->
     <header class="sticky top-0 z-100 border-b border-hairline bg-[rgba(250,250,248,0.82)] backdrop-blur-md backdrop-saturate-[140%]">
         <div class="shell flex h-[76px] items-center justify-between gap-6">
-            <a href="{{ route('home') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
+            <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
                 <svg class="h-[45px] w-[30px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
                     <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
                           d="{{ $brandMarkPath }}"
@@ -104,7 +104,7 @@
     <footer class="bg-footer text-footer-mut">
         <div class="shell grid grid-cols-[1.4fr_1fr_auto] items-start gap-[clamp(28px,5vw,60px)] pb-10 pt-[clamp(48px,6vw,72px)] max-[861px]:grid-cols-2 max-[620px]:grid-cols-1 max-[620px]:gap-[30px]">
             <div class="max-[861px]:col-span-full">
-                <a href="{{ route('home') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
+                <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
                     <svg class="h-[45px] w-[30px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
                         <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
                               d="{{ $brandMarkPath }}"
@@ -119,7 +119,7 @@
             </div>
 
             <nav class="flex flex-col gap-3.5 pt-1.5" aria-label="ফুটার নেভিগেশন">
-                <a href="{{ route('home') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">প্রচ্ছদ</a>
+                <a href="{{ route('home.index') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">প্রচ্ছদ</a>
                 <a href="{{ route('blog') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">গল্প</a>
                 <a href="#" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">আমাদের সম্পর্কে</a>
                 <a href="#" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">যোগাযোগ</a>
