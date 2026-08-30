@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -63,7 +64,7 @@ class PostController extends Controller
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
-        $validated['author_id'] = auth()->id() ?? 1;
+        $validated['author_id'] = Auth::id() ?? 1;
         $validated['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {

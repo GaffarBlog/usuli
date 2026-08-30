@@ -93,6 +93,9 @@
         </form>
     </div>
 
+@endsection
+
+@push('scripts')
     <script>
         $(function () {
             if ($('#flash-msg').length) {
@@ -103,22 +106,29 @@
 
             $('#selectAll').on('change', function () {
                 var checked = $(this).is(':checked');
-                $('input[type="checkbox"]').prop('checked', checked);
+                $('.parent-check, .child-check').prop('checked', checked);
             });
 
             $('.parent-check').on('change', function () {
                 var parentId = $(this).data('parent');
-                $('input.child-check[data-parent="' + parentId + '"]').prop('checked', $(this).is(':checked'));
+                $('.child-check[data-parent="' + parentId + '"]').prop('checked', $(this).is(':checked'));
+                syncSelectAll();
             });
 
-            $('input[type="checkbox"]').not('#selectAll').on('change', function () {
+            $('.child-check').on('change', function () {
                 var parentId = $(this).data('parent');
-                if (parentId) {
-                    var total = $('input.child-check[data-parent="' + parentId + '"]').length;
-                    var checked = $('input.child-check[data-parent="' + parentId + '"]:checked').length;
-                    $('input.parent-check[data-parent="' + parentId + '"]').prop('checked', total === checked);
-                }
+                var $parent = $('.parent-check[data-parent="' + parentId + '"]');
+                var total = $('.child-check[data-parent="' + parentId + '"]').length;
+                var checked = $('.child-check[data-parent="' + parentId + '"]:checked').length;
+                $parent.prop('checked', total === checked && total > 0);
+                syncSelectAll();
             });
+
+            function syncSelectAll() {
+                var total = $('.child-check').length;
+                var checked = $('.child-check:checked').length;
+                $('#selectAll').prop('checked', total > 0 && total === checked);
+            }
         });
     </script>
-@endsection
+@endpush
