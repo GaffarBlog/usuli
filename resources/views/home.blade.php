@@ -55,22 +55,25 @@
             </header>
 
             <div class="grid grid-cols-1 gap-[clamp(26px,3vw,40px)] min-[621px]:grid-cols-2 min-[1001px]:grid-cols-3">
-                @foreach ($articles as $article)
+                @foreach ($articles as $post)
                     <article class="reveal group flex flex-col">
-                        <a href="#" tabindex="-1" aria-hidden="true"
-                           class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] {{ $article['mediaClass'] }}">
-                            <img src="{{ $article['image'] }}" alt="" loading="lazy" class="{{ $cardImg }}">
+                        <a href="{{ route('blog.show', $post->slug) }}" tabindex="-1" aria-hidden="true"
+                           class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
+                            @if ($post->image)
+                                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="lazy"
+                                     class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
+                            @endif
                         </a>
                         <div class="flex flex-col">
-                            <span class="mb-2.5 block text-[0.74rem] font-semibold tracking-[0.12em] text-brand-deep">{{ $article['category'] }}</span>
+                            <span class="mb-2.5 block text-[0.74rem] font-semibold tracking-[0.12em] text-brand-deep">
+                                {{ $post->category?->name ?? 'বিভাগহীন' }}
+                            </span>
                             <h3 class="mb-2.5 font-serif text-[1.32rem] font-semibold leading-[1.45] tracking-[-0.003em] text-ink">
-                                <a href="#" class="transition-colors duration-300 group-hover:text-brand-deep">{{ $article['title'] }}</a>
+                                <a href="{{ route('blog.show', $post->slug) }}" class="transition-colors duration-300 group-hover:text-brand-deep">{{ $post->title }}</a>
                             </h3>
-                            <p class="mb-3.5 text-base leading-[1.78] text-body">{{ $article['excerpt'] }}</p>
+                            <p class="mb-3.5 text-base leading-[1.78] text-body">{{ $post->excerpt }}</p>
                             <div class="mt-auto flex items-center">
-                                <span class="{{ $metaText }}">{{ $article['date'] }}</span>
-                                <span class="mx-2 text-faint" aria-hidden="true">·</span>
-                                <span class="{{ $metaText }}">{{ $article['minutes'] }}</span>
+                                <span class="{{ $metaText }}">{{ $post->published_at?->format('d M Y') ?? '' }}</span>
                             </div>
                         </div>
                     </article>
@@ -117,7 +120,7 @@
             <ul class="reveal flex flex-wrap justify-center gap-3.5">
                 @foreach ($topics as $topic)
                     <li>
-                        <a href="{{ route('blog') }}"
+                        <a href="{{ route('blog', ['category' => $topic]) }}"
                            class="inline-block rounded-full border border-brand-line bg-white px-[22px] py-2.5 text-[0.98rem] font-medium text-body transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand-soft hover:text-brand-deep">
                             {{ $topic }}
                         </a>
@@ -136,10 +139,13 @@
                         <span class="{{ $sectionMarker }}" aria-hidden="true"></span>জনপ্রিয় লেখা
                     </h2>
                     <ol class="flex flex-col">
-                        @foreach ($popular as $item)
+                        @php
+                            $popularPosts = \App\Models\Post::published()->latest('published_at')->limit(4)->get();
+                        @endphp
+                        @foreach ($popularPosts as $index => $post)
                             <li class="flex items-baseline gap-5 border-b border-hairline py-5 first:pt-1">
-                                <span class="min-w-8 font-serif text-[1.15rem] font-medium text-brand [font-feature-settings:'tnum']">{{ $item['num'] }}</span>
-                                <a href="#" class="font-serif text-[1.2rem] font-medium leading-normal text-ink transition-colors duration-300 hover:text-brand-deep">{{ $item['title'] }}</a>
+                                <span class="min-w-8 font-serif text-[1.15rem] font-medium text-brand [font-feature-settings:'tnum']">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                <a href="#" class="font-serif text-[1.2rem] font-medium leading-normal text-ink transition-colors duration-300 hover:text-brand-deep">{{ $post->title }}</a>
                             </li>
                         @endforeach
                     </ol>
@@ -150,10 +156,13 @@
                         <span class="{{ $sectionMarker }}" aria-hidden="true"></span>সম্পাদকের পছন্দ
                     </h2>
                     <ol class="flex flex-col">
-                        @foreach ($picks as $item)
+                        @php
+                            $featuredPosts = \App\Models\Post::published()->featured()->latest('published_at')->limit(4)->get();
+                        @endphp
+                        @foreach ($featuredPosts as $index => $post)
                             <li class="flex items-baseline gap-5 border-b border-hairline py-5 first:pt-1">
-                                <span class="min-w-8 font-serif text-[1.15rem] font-medium text-faint [font-feature-settings:'tnum']">{{ $item['num'] }}</span>
-                                <a href="#" class="font-serif text-[1.2rem] font-medium leading-normal text-ink transition-colors duration-300 hover:text-brand-deep">{{ $item['title'] }}</a>
+                                <span class="min-w-8 font-serif text-[1.15rem] font-medium text-faint [font-feature-settings:'tnum']">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                <a href="#" class="font-serif text-[1.2rem] font-medium leading-normal text-ink transition-colors duration-300 hover:text-brand-deep">{{ $post->title }}</a>
                             </li>
                         @endforeach
                     </ol>

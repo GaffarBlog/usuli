@@ -5,8 +5,6 @@
 @section('content')
     @php
         $eyebrowTick = 'inline-block h-0.5 w-[22px]';
-        $readLink = 'group/link relative inline-flex w-fit items-center gap-2 font-semibold text-brand-deep after:absolute after:inset-x-0 after:-bottom-[3px] after:h-[1.5px] after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:after:scale-x-100 focus-visible:after:scale-x-100';
-        $cardImg = 'absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none';
         $metaText = 'text-[0.82rem] font-medium tracking-[0.01em] text-faint';
         $filterPill = 'cursor-pointer rounded-full border border-brand-line bg-white px-[18px] py-2 text-[0.95rem] font-medium text-body transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand-soft hover:text-brand-deep aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-white';
     @endphp
@@ -40,10 +38,11 @@
         <ul class="reveal flex flex-wrap gap-3" aria-label="বিষয়ভিত্তিক ফিল্টার">
             @foreach ($filters as $filter)
                 <li>
-                    <button type="button" data-filter="{{ $filter['value'] }}" aria-pressed="{{ $filter['active'] ? 'true' : 'false' }}"
-                            class="js-filter-pill {{ $filterPill }}">
+                    <a href="{{ $filter['value'] === 'all' ? route('blog') : route('blog', ['category' => $filter['value']]) }}"
+                       aria-pressed="{{ $filter['active'] ? 'true' : 'false' }}"
+                       class="{{ $filterPill }}">
                         {{ $filter['label'] }}
-                    </button>
+                    </a>
                 </li>
             @endforeach
         </ul>
@@ -52,57 +51,40 @@
     <!-- ============ ARTICLE GRID ============ -->
     <section class="pb-[clamp(40px,5vw,64px)]" aria-label="সব লেখার তালিকা">
         <div class="shell grid grid-cols-1 gap-[clamp(26px,3vw,40px)] min-[621px]:grid-cols-2 min-[1001px]:grid-cols-3">
-            @foreach ($visibleArticles as $article)
-                <article class="js-article-card reveal group flex flex-col" data-category="{{ $article['category'] }}">
-                    <a href="#" tabindex="-1" aria-hidden="true"
-                       class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] {{ $article['mediaClass'] }}">
-                        <img src="{{ $article['image'] }}" alt="" loading="lazy" class="{{ $cardImg }}">
+            @forelse ($posts as $post)
+                <article class="reveal group flex flex-col">
+                    <a href="{{ route('blog.show', $post->slug) }}" tabindex="-1" aria-hidden="true"
+                       class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
+                        @if ($post->image)
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="lazy"
+                                 class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
+                        @endif
                     </a>
                     <div class="flex flex-col">
-                        <span class="mb-2.5 block text-[0.74rem] font-semibold tracking-[0.12em] text-brand-deep">{{ $article['category'] }}</span>
+                        <span class="mb-2.5 block text-[0.74rem] font-semibold tracking-[0.12em] text-brand-deep">
+                            {{ $post->category?->name ?? 'বিভাগহীন' }}
+                        </span>
                         <h2 class="mb-2.5 font-serif text-[1.32rem] font-semibold leading-[1.45] tracking-[-0.003em] text-ink">
-                            <a href="#" class="transition-colors duration-300 group-hover:text-brand-deep">{{ $article['title'] }}</a>
+                            <a href="{{ route('blog.show', $post->slug) }}" class="transition-colors duration-300 group-hover:text-brand-deep">{{ $post->title }}</a>
                         </h2>
-                        <p class="mb-3.5 text-base leading-[1.78] text-body">{{ $article['excerpt'] }}</p>
+                        <p class="mb-3.5 text-base leading-[1.78] text-body">{{ $post->excerpt }}</p>
                         <div class="mt-auto flex items-center">
-                            <span class="{{ $metaText }}">{{ $article['date'] }}</span>
-                            <span class="mx-2 text-faint" aria-hidden="true">·</span>
-                            <span class="{{ $metaText }}">{{ $article['minutes'] }}</span>
+                            <span class="{{ $metaText }}">{{ $post->published_at?->format('d M Y') ?? '' }}</span>
                         </div>
                     </div>
                 </article>
-            @endforeach
-
-            @foreach ($extraArticles as $article)
-                <article class="js-article-card js-extra-card reveal group flex flex-col" data-category="{{ $article['category'] }}" hidden>
-                    <a href="#" tabindex="-1" aria-hidden="true"
-                       class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] {{ $article['mediaClass'] }}">
-                        <img src="{{ $article['image'] }}" alt="" loading="lazy" class="{{ $cardImg }}">
-                    </a>
-                    <div class="flex flex-col">
-                        <span class="mb-2.5 block text-[0.74rem] font-semibold tracking-[0.12em] text-brand-deep">{{ $article['category'] }}</span>
-                        <h2 class="mb-2.5 font-serif text-[1.32rem] font-semibold leading-[1.45] tracking-[-0.003em] text-ink">
-                            <a href="#" class="transition-colors duration-300 group-hover:text-brand-deep">{{ $article['title'] }}</a>
-                        </h2>
-                        <p class="mb-3.5 text-base leading-[1.78] text-body">{{ $article['excerpt'] }}</p>
-                        <div class="mt-auto flex items-center">
-                            <span class="{{ $metaText }}">{{ $article['date'] }}</span>
-                            <span class="mx-2 text-faint" aria-hidden="true">·</span>
-                            <span class="{{ $metaText }}">{{ $article['minutes'] }}</span>
-                        </div>
-                    </div>
-                </article>
-            @endforeach
+            @empty
+                <div class="col-span-full py-20 text-center">
+                    <p class="text-lg text-faint">কোনো লেখা পাওয়া যায়নি।</p>
+                </div>
+            @endforelse
         </div>
     </section>
 
-    <!-- ============ LOAD MORE ============ -->
-    @if (count($extraArticles) > 0)
+    <!-- ============ PAGINATION ============ -->
+    @if ($posts->hasPages())
         <div class="shell flex justify-center pb-[clamp(52px,6vw,90px)]">
-            <button type="button" id="loadMoreBtn"
-                    class="rounded-full border border-brand-line bg-white px-8 py-3.5 text-base font-semibold text-brand-deep transition-all duration-300 hover:-translate-y-px hover:border-brand hover:bg-brand-soft hover:text-brand">
-                আরও দেখুন
-            </button>
+            {{ $posts->links() }}
         </div>
     @endif
 @endsection

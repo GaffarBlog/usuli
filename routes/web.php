@@ -7,6 +7,7 @@ Route::middleware(['web'])->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('home.index');
         Route::get('/blog', 'blog')->name('blog');
+        Route::get('/blog/{post:slug}', 'show')->name('blog.show');
     });
 
     // Route::get('/login', function () {
