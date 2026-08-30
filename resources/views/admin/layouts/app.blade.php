@@ -51,6 +51,7 @@
         <nav class="flex flex-col gap-1 px-3" aria-label="অ্যাডমিন মেনু">
             <p class="px-3.5 pb-2 pt-3 text-[0.72rem] font-semibold tracking-[0.14em] text-footer-mut">মেনু</p>
 
+            @if (has_permission('admin.dashboard.view') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.dashboard.view') }}" aria-current="{{ $currentRoute === 'admin.dashboard.view' ? 'page' : 'false' }}" class="{{ $currentRoute === 'admin.dashboard.view' ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ $currentRoute === 'admin.dashboard.view' ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -61,7 +62,9 @@
                 </svg>
                 ড্যাশবোর্ড
             </a>
+            @endif
 
+            @if (has_permission('admin.posts.create') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.posts.create') }}" class="{{ $currentRoute === 'admin.posts.create' ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ $currentRoute === 'admin.posts.create' ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -72,7 +75,9 @@
                 </svg>
                 নতুন লেখা
             </a>
+            @endif
 
+            @if (has_permission('admin.posts.index') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.posts.index') }}" class="{{ str_starts_with($currentRoute, 'admin.posts') ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.posts') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -85,7 +90,9 @@
                 </svg>
                 সব লেখা
             </a>
+            @endif
 
+            @if (has_permission('admin.categories.index') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.categories.index') }}" class="{{ str_starts_with($currentRoute, 'admin.categories') ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.categories') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor"
                     stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -94,24 +101,9 @@
                 </svg>
                 বিষয়সমূহ
             </a>
+            @endif
 
-            <a href="#" class="{{ $menuItem }}">
-                <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12a8 8 0 0 1-8 8H4l2.2-2.6A8 8 0 1 1 21 12z" />
-                </svg>
-                মন্তব্য
-                <span class="ml-auto rounded-full bg-brand/25 px-2 py-0.5 text-[0.7rem] font-semibold text-[#9fdcec]">১২</span>
-            </a>
-
-            <a href="#" class="{{ $menuItem }}">
-                <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3.5" y="4.5" width="17" height="15" rx="2" />
-                    <circle cx="9" cy="10" r="1.6" />
-                    <path d="m4.5 18 4.8-4.8 3.4 3.4 2.8-2.8 4 4" />
-                </svg>
-                গণমাধ্যম
-            </a>
-
+            @if (has_permission('admin.users.view') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.users.view') }}" class="{{ str_starts_with($currentRoute, 'admin.users') ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.users') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="8" r="3.2" />
@@ -121,7 +113,9 @@
                 </svg>
                 সদস্য
             </a>
+            @endif
 
+            @if (has_permission('admin.roles.view') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.roles.view') }}" class="{{ str_starts_with($currentRoute, 'admin.roles') ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.roles') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
@@ -131,6 +125,7 @@
                 </svg>
                 ভূমিকা
             </a>
+            @endif
         </nav>
 
         <nav class="mt-auto flex flex-col gap-1 border-t border-white/10 px-3 py-4" aria-label="অ্যাকাউন্ট মেনু">
