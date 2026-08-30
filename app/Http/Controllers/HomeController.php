@@ -31,7 +31,7 @@ class HomeController extends Controller
             ->latest('published_at')
             ->limit(6)
             ->get();
-
+        $popularPosts = Post::published()->latest('published_at')->limit(4)->get();
         $topics = Category::active()->topLevel()->orderBy('name')->pluck('name')->toArray();
 
         return response()->view('home', [
@@ -39,6 +39,7 @@ class HomeController extends Controller
             'activeNav' => 'প্রচ্ছদ',
             'articles' => $posts,
             'topics' => $topics,
+            'popularPosts' => $popularPosts,
         ]);
     }
 
