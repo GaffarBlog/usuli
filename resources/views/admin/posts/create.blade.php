@@ -19,6 +19,7 @@
         {{-- Form --}}
         <form method="POST"
               action="{{ route('admin.posts.store') }}"
+              enctype="multipart/form-data"
               class="space-y-6 rounded-xl border border-hairline bg-white p-6">
             @csrf
 
@@ -67,17 +68,17 @@
                 @enderror
             </div>
 
-            {{-- Image URL --}}
+            {{-- Image --}}
             <div>
                 <label for="image" class="mb-1.5 block text-sm font-medium text-ink">
-                    ছবির URL
+                    ছবি
                 </label>
-                <input type="url"
+                <input type="file"
                        id="image"
                        name="image"
-                       value="{{ old('image') }}"
-                       class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
-                       placeholder="https://example.com/image.jpg">
+                       accept="image/*"
+                       class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20 file:mr-3 file:rounded-lg file:border-0 file:bg-brand/10 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand hover:file:bg-brand/20">
+                <p class="mt-1 text-xs text-faint">সর্বোচ্চ ২ এমবি। JPG, PNG, GIF সাপোর্টেড।</p>
                 @error('image')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror

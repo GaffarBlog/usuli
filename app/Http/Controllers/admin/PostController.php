@@ -54,7 +54,7 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'excerpt' => 'nullable|string|max:500',
-            'image' => 'nullable|url|max:1000',
+            'image' => 'nullable|image|max:2048',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:draft,published',
             'is_featured' => 'boolean',
@@ -64,6 +64,10 @@ class PostController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
         $validated['author_id'] = auth()->id() ?? 1;
         $validated['is_featured'] = $request->boolean('is_featured');
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('posts', 'public');
+        }
 
         if ($validated['status'] === 'published' && empty($validated['published_at'])) {
             $validated['published_at'] = now();
@@ -90,7 +94,7 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'excerpt' => 'nullable|string|max:500',
-            'image' => 'nullable|url|max:1000',
+            'image' => 'nullable|image|max:2048',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:draft,published',
             'is_featured' => 'boolean',
@@ -99,6 +103,13 @@ class PostController extends Controller
 
         $validated['slug'] = Str::slug($validated['title']);
         $validated['is_featured'] = $request->boolean('is_featured');
+
+        if ($request->hasFile('image')) {
+            if ($post->image && \Storage::disk('public')->exists($post->image)) {
+                \Storage::disk('public')->delete($post->image);
+            }
+            $validated['image'] = $request->file('image')->store('posts', 'public');
+        }
 
         if ($validated['status'] === 'published' && $post->status === 'draft' && empty($validated['published_at'])) {
             $validated['published_at'] = now();
