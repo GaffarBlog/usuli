@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -43,6 +44,15 @@ class Post extends Model
         static::updating(function (Post $post) {
             if (empty($post->slug)) {
                 $post->slug = Str::slug($post->title);
+            }
+        });
+
+        static::deleting(function (Post $post) {
+            if ($post->image) {
+                $path = str_replace(asset(''), public_path('/'), $post->image);
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
             }
         });
     }

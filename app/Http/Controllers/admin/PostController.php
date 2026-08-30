@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -66,7 +67,7 @@ class PostController extends Controller
         $validated['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('posts', 'public');
+            $validated['image'] = upload_file($request->file('image'), 'posts', $validated['title']);
         }
 
         if ($validated['status'] === 'published' && empty($validated['published_at'])) {
@@ -105,10 +106,13 @@ class PostController extends Controller
         $validated['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {
-            if ($post->image && \Storage::disk('public')->exists($post->image)) {
-                \Storage::disk('public')->delete($post->image);
+            if ($post->image) {
+                $oldPath = str_replace(asset(''), public_path('/'), $post->image);
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
             }
-            $validated['image'] = $request->file('image')->store('posts', 'public');
+            $validated['image'] = upload_file($request->file('image'), 'posts', $validated['title']);
         }
 
         if ($validated['status'] === 'published' && $post->status === 'draft' && empty($validated['published_at'])) {

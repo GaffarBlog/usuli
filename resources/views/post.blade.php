@@ -52,7 +52,7 @@
         <section class="pb-[clamp(32px,4vw,52px)]">
             <div class="shell">
                 <figure class="reveal overflow-hidden rounded-[14px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="eager"
+                    <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="eager"
                          class="ph-img h-full w-full object-cover" style="aspect-ratio: 16/9;">
                 </figure>
             </div>
@@ -85,7 +85,7 @@
                         <article class="reveal group flex flex-col">
                             <a href="{{ route('blog.show', $post->slug) }}" class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
                                 @if ($post->image)
-                                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="lazy"
+                                    <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="lazy"
                                          class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
                                 @endif
                             </a>

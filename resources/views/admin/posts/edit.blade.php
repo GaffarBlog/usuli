@@ -76,7 +76,7 @@
                 </label>
                 @if ($post->image)
                     <div class="mb-3">
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="h-32 w-auto rounded-lg object-cover">
+                        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-32 w-auto rounded-lg object-cover">
                     </div>
                 @endif
                 <input type="file"
