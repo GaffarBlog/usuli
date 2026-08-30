@@ -14,7 +14,7 @@
 
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
 
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-page font-sans text-[17px] leading-[1.75] text-body antialiased max-[620px]:text-base">
@@ -288,6 +288,8 @@
             $(window).on('scroll resize', revealInView);
         });
     </script>
+
+    @stack('scripts')
 </body>
 
 </html>

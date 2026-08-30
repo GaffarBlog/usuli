@@ -42,15 +42,11 @@
 
             {{-- Content --}}
             <div>
-                <label for="content" class="mb-1.5 block text-sm font-medium text-ink">
+                <label class="mb-1.5 block text-sm font-medium text-ink">
                     বিষয়বস্তু <span class="text-red-500">*</span>
                 </label>
-                <textarea id="content"
-                          name="content"
-                          rows="12"
-                          required
-                          class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
-                          placeholder="লেখার বিষয়বস্তু লিখুন...">{{ old('content', $post->content) }}</textarea>
+                <div id="tiptap-editor" data-name="content"
+                     class="rounded-lg border border-hairline bg-gray-50/50 min-h-[300px] focus-within:border-brand focus-within:bg-white focus-within:ring-1 focus-within:ring-brand/20"></div>
                 @error('content')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -175,4 +171,12 @@
             </div>
         </form>
     </div>
+
+    @push('scripts')
+        <script type="module">
+            document.addEventListener('DOMContentLoaded', function () {
+                initTipTap('#tiptap-editor', {!! json_encode(old('content', $post->content)) !!})
+            })
+        </script>
+    @endpush
 @endsection
