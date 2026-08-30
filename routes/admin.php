@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,12 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
         Route::get('/', 'edit')->name('edit');
         Route::put('/', 'update')->name('update');
         Route::put('/password', 'updatePassword')->name('password');
+    });
+
+    // Settings
+    Route::controller(SettingController::class)->prefix('settings')->name('admin.settings.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::put('/', 'update')->name('update');
     });
 
     // Route::get('/', [DashboardController::class, '__invoke'])->name('admin.dashboard');
