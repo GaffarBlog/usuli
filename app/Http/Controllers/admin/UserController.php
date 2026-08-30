@@ -118,6 +118,7 @@ class UserController extends Controller
         $images = $user->images;
         if ($request->file('avatar')) {
             $images = upload_file($request->file('avatar'), 'users');
+            dd($images);
         }
         $user->update([
             'name' => $request->name,

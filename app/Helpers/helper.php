@@ -244,50 +244,34 @@ if (! function_exists('upload_file')) {
 
         // Base upload path
         $basePath = public_path("storage/uploads/{$folder}");
-        $webpPath = "{$basePath}/webp";
 
-        // Ensure directories exist
+        // Ensure directory exists
         if (! File::exists($basePath)) {
             File::makeDirectory($basePath, 0755, true);
         }
 
-        if (! File::exists($webpPath)) {
-            File::makeDirectory($webpPath, 0755, true);
-        }
-
         // Generate unique file name
-        $extension = $file->getClientOriginalExtension();
         if ($image_name) {
             $image_name = Str::slug($image_name);
             $webpFileName = "{$image_name}.webp";
             $counter = 1;
-            while (File::exists("{$basePath}/webp/{$webpFileName}")) {
+            while (File::exists("{$basePath}/{$webpFileName}")) {
                 $webpFileName = "{$image_name}-{$counter}.webp";
                 $counter++;
             }
-            $fileName = pathinfo($webpFileName, PATHINFO_FILENAME).'.'.$extension;
         } else {
-            $fileName = Str::uuid().'.'.$extension;
             $webpFileName = Str::uuid().'.webp';
         }
 
-        // return "{$basePath}/{$fileName}";
-        // Move original file
-        $file->move($basePath, $fileName);
-
-        // Create WebP version
-        Image::load("{$basePath}/{$fileName}")
+        // Save as WebP directly
+        Image::load($file->getPathname())
             ->format('webp')
             ->quality(80)
-            ->save("{$webpPath}/{$webpFileName}");
+            ->save("{$basePath}/{$webpFileName}");
 
-        $originalPath = "storage/uploads/{$folder}/{$fileName}";
-        $webpPath = "storage/uploads/{$folder}/webp/{$webpFileName}";
+        $webpPath = "storage/uploads/{$folder}/{$webpFileName}";
 
-        return [
-            'original' => asset($originalPath),
-            'webp' => asset($webpPath),
-        ];
+        return asset($webpPath);
     }
 }
 if (! function_exists('translate')) {
