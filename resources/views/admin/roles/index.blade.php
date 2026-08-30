@@ -59,6 +59,14 @@
                             </td>
                             <td class="px-5 py-3.5 text-right">
                                 <div class="flex items-center justify-end gap-1">
+                                    <a href="{{ route('admin.permissions.view', $role->id) }}"
+                                       class="grid h-8 w-8 place-items-center rounded-lg text-faint transition-colors hover:bg-brand/10 hover:text-brand"
+                                       title="অনুমতি">
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                        </svg>
+                                    </a>
                                     <a href="{{ route('admin.roles.edit', $role->id) }}"
                                        class="grid h-8 w-8 place-items-center rounded-lg text-faint transition-colors hover:bg-brand/10 hover:text-brand"
                                        title="সম্পাদনা">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
+use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
@@ -35,6 +36,12 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
         Route::get('/roles-edit/{id}', 'edit')->name('admin.roles.edit');
         Route::post('/roles-update', 'update')->name('admin.roles.update');
         Route::post('/roles-delete', 'delete')->name('admin.roles.delete');
+    });
+
+    Route::controller(PermissionController::class)->group(function () {
+        Route::get('/permission/{role_id}', 'index')->name('admin.permissions.view');
+        Route::post('/permissions', 'update')->name('admin.permissions.update');
+        Route::get('/permissions/routes', 'update_routes')->name('admin.permissions.update_routes');
     });
 
     // Dashboard

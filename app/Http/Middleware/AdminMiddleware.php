@@ -24,10 +24,9 @@ class AdminMiddleware
                 return redirect()->route('admin.dashboard.view');
             } else {
                 if (Auth::user()->Role?->status === 'Active' && (has_permission($route_name) || Auth::user()->Role?->name === 'Super Admin')) {
-
                     return $next($request);
                 } else {
-                    dd(Auth::user()->Role?->status);
+                    // dd(Auth::user()->Role?->status);
 
                     return redirect()->route('admin.dashboard.view')->with('warning', 'You do not have permission to access this route.');
                 }
