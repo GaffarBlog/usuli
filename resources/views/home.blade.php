@@ -15,30 +15,63 @@
     <!-- ============ HERO / FEATURED ============ -->
     <section class="pb-[clamp(48px,6vw,88px)] pt-[clamp(40px,6vw,78px)]" aria-labelledby="heroTitle">
         <div class="shell grid items-center gap-8 min-[861px]:grid-cols-[1fr_1.05fr] min-[861px]:gap-[clamp(32px,5vw,68px)]">
-            <figure class="reveal group relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] min-[861px]:aspect-[5/4]">
-                <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1400&q=70" alt="সন্ধ্যার শহর—আলো-ছায়ায় ঢাকা পথঘাট" loading="eager"
-                    class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
-            </figure>
+            @if ($heroPost)
+                <figure class="reveal group relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] min-[861px]:aspect-[5/4]">
+                    @if ($heroPost->image)
+                        <img src="{{ $heroPost->image }}" alt="{{ $heroPost->title }}" loading="eager"
+                            class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
+                    @endif
+                </figure>
 
-            <div>
-                <span class="reveal mb-[22px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-brand-deep">
-                    <span class="{{ $eyebrowTick }} bg-brand" aria-hidden="true"></span>বিশেষ লেখা
-                </span>
-                <h1 class="reveal mb-[22px] font-serif text-[clamp(2.05rem,4.4vw,3.35rem)] font-semibold leading-[1.28] tracking-[-0.005em] text-ink" id="heroTitle">
-                    শহরের ব্যস্ততার মাঝেও হারিয়ে যাচ্ছে না যে গল্পগুলো
-                </h1>
-                <p class="reveal mb-[26px] max-w-[46ch] text-[1.15rem] leading-[1.85] text-body">
-                    সময়ের পরিবর্তনের সঙ্গে বদলে যাচ্ছে আমাদের জীবন, কিন্তু কিছু গল্প এখনো মানুষের স্মৃতি ও অনুভূতির সঙ্গে জড়িয়ে থাকে।
-                </p>
-                <div class="reveal mb-[26px] flex items-center">
-                    <span class="{{ $metaText }}">২৫ আগস্ট ২০২৬</span>
-                    <span class="mx-2 text-faint" aria-hidden="true">·</span>
-                    <span class="{{ $metaText }}">৬ মিনিট পড়তে সময় লাগবে</span>
+                <div>
+                    <span class="reveal mb-[22px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-brand-deep">
+                        <span class="{{ $eyebrowTick }} bg-brand" aria-hidden="true"></span>বিশেষ লেখা
+                    </span>
+                    <h1 class="reveal mb-[22px] font-serif text-[clamp(2.05rem,4.4vw,3.35rem)] font-semibold leading-[1.28] tracking-[-0.005em] text-ink" id="heroTitle">
+                        {{ $heroPost->title }}
+                    </h1>
+                    @if ($heroPost->excerpt)
+                        <p class="reveal mb-[26px] max-w-[46ch] text-[1.15rem] leading-[1.85] text-body">
+                            {{ $heroPost->excerpt }}
+                        </p>
+                    @endif
+                    <div class="reveal mb-[26px] flex items-center">
+                        <span class="{{ $metaText }}">{{ $heroPost->published_at?->format('d M Y') ?? '' }}</span>
+                        @if ($heroPost->category)
+                            <span class="mx-2 text-faint" aria-hidden="true">·</span>
+                            <span class="{{ $metaText }}">{{ $heroPost->category->name }}</span>
+                        @endif
+                    </div>
+                    <a href="{{ route('blog.show', $heroPost->slug) }}" class="reveal {{ $readLink }}">
+                        পড়ুন <span class="{{ $readLinkArrow }}" aria-hidden="true">→</span>
+                    </a>
                 </div>
-                <a href="#" class="reveal {{ $readLink }}">
-                    পড়ুন <span class="{{ $readLinkArrow }}" aria-hidden="true">→</span>
-                </a>
-            </div>
+            @else
+                <figure class="reveal group relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] min-[861px]:aspect-[5/4]">
+                    <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1400&q=70" alt="সন্ধ্যার শহর—আলো-ছায়ায় ঢাকা পথঘাট" loading="eager"
+                        class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
+                </figure>
+
+                <div>
+                    <span class="reveal mb-[22px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-brand-deep">
+                        <span class="{{ $eyebrowTick }} bg-brand" aria-hidden="true"></span>বিশেষ লেখা
+                    </span>
+                    <h1 class="reveal mb-[22px] font-serif text-[clamp(2.05rem,4.4vw,3.35rem)] font-semibold leading-[1.28] tracking-[-0.005em] text-ink" id="heroTitle">
+                        শহরের ব্যস্ততার মাঝেও হারিয়ে যাচ্ছে না যে গল্পগুলো
+                    </h1>
+                    <p class="reveal mb-[26px] max-w-[46ch] text-[1.15rem] leading-[1.85] text-body">
+                        সময়ের পরিবর্তনের সঙ্গে বদলে যাচ্ছে আমাদের জীবন, কিন্তু কিছু গল্প এখনো মানুষের স্মৃতি ও অনুভূতির সঙ্গে জড়িয়ে থাকে।
+                    </p>
+                    <div class="reveal mb-[26px] flex items-center">
+                        <span class="{{ $metaText }}">২৫ আগস্ট ২০২৬</span>
+                        <span class="mx-2 text-faint" aria-hidden="true">·</span>
+                        <span class="{{ $metaText }}">৬ মিনিট পড়তে সময় লাগবে</span>
+                    </div>
+                    <a href="#" class="reveal {{ $readLink }}">
+                        পড়ুন <span class="{{ $readLinkArrow }}" aria-hidden="true">→</span>
+                    </a>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -84,25 +117,50 @@
     <!-- ============ FEATURED STORY ============ -->
     <section class="relative isolate flex min-h-[clamp(420px,56vw,560px)] items-center" aria-labelledby="featureTitle">
         <div class="ph absolute inset-0 -z-10 overflow-hidden bg-[linear-gradient(120deg,#12333b,#1f6d80)]">
-            <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=72" alt="ভোরের নদী ও তীরে জেগে ওঠা জনপদ" loading="lazy"
-                class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+            @if ($featurePost && $featurePost->image)
+                <img src="{{ $featurePost->image }}" alt="{{ $featurePost->title }}" loading="lazy"
+                    class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+            @elseif ($homeBanner)
+                <img src="{{ $homeBanner }}" alt="ব্যানার" loading="lazy"
+                    class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+            @else
+                <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=72" alt="ভোরের নদী ও তীরে জেগে ওঠা জনপদ" loading="lazy"
+                    class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+            @endif
             <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,26,30,0.92)_0%,rgba(12,26,30,0.72)_42%,rgba(12,26,30,0.15)_100%),linear-gradient(0deg,rgba(12,26,30,0.55),rgba(12,26,30,0.1))] max-[620px]:bg-[linear-gradient(0deg,rgba(12,26,30,0.94)_8%,rgba(12,26,30,0.55)_55%,rgba(12,26,30,0.35)_100%)]"
                 aria-hidden="true"></div>
         </div>
         <div class="shell">
             <div class="reveal max-w-[620px] py-10">
-                <span class="mb-[22px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-[#bfe4ec]">
-                    <span class="{{ $eyebrowTick }} bg-[#bfe4ec]" aria-hidden="true"></span>নির্বাচিত
-                </span>
-                <h2 class="mb-5 font-serif text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.3] tracking-[-0.005em] text-white" id="featureTitle">
-                    যে নদী বদলে দিয়েছে একটি জনপদের গল্প
-                </h2>
-                <p class="mb-[26px] max-w-[52ch] text-[1.1rem] leading-[1.85] text-[rgba(255,255,255,0.86)]">
-                    নদীর দুই তীরে গড়ে ওঠা জীবন, তার স্রোতের সঙ্গে বদলে যাওয়া সময় আর মানুষের গল্প—একটি দীর্ঘ অনুসন্ধান, যেখানে জল আর মাটি মিলেমিশে লিখেছে এক জনপদের ইতিহাস।
-                </p>
-                <a href="#" class="{{ $readLink }} text-[#eafafd]">
-                    সম্পূর্ণ গল্প পড়ুন <span class="{{ $readLinkArrow }}" aria-hidden="true">→</span>
-                </a>
+                @if ($featurePost)
+                    <span class="mb-[22px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-[#bfe4ec]">
+                        <span class="{{ $eyebrowTick }} bg-[#bfe4ec]" aria-hidden="true"></span>নির্বাচিত
+                    </span>
+                    <h2 class="mb-5 font-serif text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.3] tracking-[-0.005em] text-white" id="featureTitle">
+                        {{ $featurePost->title }}
+                    </h2>
+                    @if ($featurePost->excerpt)
+                        <p class="mb-[26px] max-w-[52ch] text-[1.1rem] leading-[1.85] text-[rgba(255,255,255,0.86)]">
+                            {{ $featurePost->excerpt }}
+                        </p>
+                    @endif
+                    <a href="{{ route('blog.show', $featurePost->slug) }}" class="{{ $readLink }} text-[#eafafd]">
+                        সম্পূর্ণ গল্প পড়ুন <span class="{{ $readLinkArrow }}" aria-hidden="true">→</span>
+                    </a>
+                @else
+                    <span class="mb-[22px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-[#bfe4ec]">
+                        <span class="{{ $eyebrowTick }} bg-[#bfe4ec]" aria-hidden="true"></span>নির্বাচিত
+                    </span>
+                    <h2 class="mb-5 font-serif text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.3] tracking-[-0.005em] text-white" id="featureTitle">
+                        যে নদী বদলে দিয়েছে একটি জনপদের গল্প
+                    </h2>
+                    <p class="mb-[26px] max-w-[52ch] text-[1.1rem] leading-[1.85] text-[rgba(255,255,255,0.86)]">
+                        নদীর দুই তীরে গড়ে ওঠা জীবন, তার স্রোতের সঙ্গে বদলে যাওয়া সময় আর মানুষের গল্প—একটি দীর্ঘ অনুসন্ধান, যেখানে জল আর মাটি মিলেমিশে লিখেছে এক জনপদের ইতিহাস।
+                    </p>
+                    <a href="#" class="{{ $readLink }} text-[#eafafd]">
+                        সম্পূর্ণ গল্প পড়ুন <span class="{{ $readLinkArrow }}" aria-hidden="true">→</span>
+                    </a>
+                @endif
             </div>
         </div>
     </section>

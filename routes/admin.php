@@ -63,6 +63,7 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
     Route::controller(SettingController::class)->prefix('settings')->name('admin.settings.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::put('/', 'update')->name('update');
+        Route::get('/posts/search', 'searchPosts')->name('posts.search');
     });
 
     // Route::get('/', [DashboardController::class, '__invoke'])->name('admin.dashboard');

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use App\Models\Setting;
 use App\Services\SettingService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -13,7 +15,17 @@ class SettingController extends Controller
     {
         $settings = Setting::pluck('value', 'key')->toArray();
 
-        return view('admin.settings.index', compact('settings'));
+        $heroPost = null;
+        $featurePost = null;
+
+        if (! empty($settings['home_hero_post_id'])) {
+            $heroPost = Post::find($settings['home_hero_post_id']);
+        }
+        if (! empty($settings['home_feature_post_id'])) {
+            $featurePost = Post::find($settings['home_feature_post_id']);
+        }
+
+        return view('admin.settings.index', compact('settings', 'heroPost', 'featurePost'));
     }
 
     public function update(Request $request, SettingService $service)
@@ -41,6 +53,34 @@ class SettingController extends Controller
             }
         }
 
+        if ($tab === 'home') {
+            $request->validate([
+                'home_hero_post_id' => 'nullable|exists:posts,id',
+                'home_feature_post_id' => 'nullable|exists:posts,id',
+                'home_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            ]);
+
+            $service->set('home_hero_post_id', $request->home_hero_post_id, 'string');
+            $service->set('home_feature_post_id', $request->home_feature_post_id, 'string');
+
+            if ($request->file('home_banner')) {
+                $service->set('home_banner', upload_file($request->file('home_banner'), 'settings', 'home-banner'), 'image');
+            }
+        }
+
         return redirect()->route('admin.settings.index', ['tab' => $tab])->with('success', 'সেটিংস সংরক্ষিত হয়েছে।');
+    }
+
+    public function searchPosts(Request $request): JsonResponse
+    {
+        $query = $request->input('q', '');
+
+        $posts = Post::published()
+            ->where('title', 'like', "%{$query}%")
+            ->orWhere('slug', 'like', "%{$query}%")
+            ->limit(10)
+            ->get(['id', 'title', 'slug', 'image', 'excerpt']);
+
+        return response()->json($posts);
     }
 }

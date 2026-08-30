@@ -34,12 +34,29 @@ class HomeController extends Controller
         $popularPosts = Post::published()->latest('published_at')->limit(4)->get();
         $topics = Category::active()->topLevel()->orderBy('name')->pluck('name')->toArray();
 
+        $heroPost = null;
+        $featurePost = null;
+        $homeBanner = GetSetting('home_banner');
+
+        $heroPostId = GetSetting('home_hero_post_id');
+        if ($heroPostId) {
+            $heroPost = Post::published()->with('category')->find($heroPostId);
+        }
+
+        $featurePostId = GetSetting('home_feature_post_id');
+        if ($featurePostId) {
+            $featurePost = Post::published()->with('category')->find($featurePostId);
+        }
+
         return response()->view('home', [
             'navItems' => $this->navItems,
             'activeNav' => 'প্রচ্ছদ',
             'articles' => $posts,
             'topics' => $topics,
             'popularPosts' => $popularPosts,
+            'heroPost' => $heroPost,
+            'featurePost' => $featurePost,
+            'homeBanner' => $homeBanner,
         ]);
     }
 

@@ -24,6 +24,9 @@ return new class extends Migration
             ['key' => 'phone', 'value' => null, 'type' => 'string', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'email', 'value' => null, 'type' => 'string', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'address', 'value' => null, 'type' => 'text', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'home_hero_post_id', 'value' => null, 'type' => 'string', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'home_feature_post_id', 'value' => null, 'type' => 'string', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'home_banner', 'value' => null, 'type' => 'image', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
