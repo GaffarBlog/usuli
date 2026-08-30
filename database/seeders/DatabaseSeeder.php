@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             RouteListSeeder::class,
             RoleSeeder::class,
             CategorySeeder::class,
-            PostSeeder::class,
+            // PostSeeder::class,
         ]);
     }
 }
