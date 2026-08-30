@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\PostController;
+use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,13 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index')->name('admin.dashboard.view');
         Route::get('/logout', 'logout')->name('admin.logout');
+    });
+
+    // Profile
+    Route::controller(ProfileController::class)->prefix('profile')->name('admin.profile.')->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/', 'update')->name('update');
+        Route::put('/password', 'updatePassword')->name('password');
     });
 
     // Route::get('/', [DashboardController::class, '__invoke'])->name('admin.dashboard');

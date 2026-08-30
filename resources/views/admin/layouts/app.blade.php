@@ -146,7 +146,7 @@
                 </svg>
                 সাহায্য
             </a>
-            <a href="#" class="{{ $menuItem }}">
+            <a href="{{ route('admin.logout') }}" class="{{ $menuItem }}">
                 <svg class="{{ $navIcon }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7" />
                     <path d="m17 8 4 4-4 4" />
@@ -193,13 +193,17 @@
                         <span class="absolute right-2 top-2 h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
                     </button>
                     <span class="mx-1 hidden h-6 w-px bg-hairline min-[480px]:block" aria-hidden="true"></span>
-                    <button type="button" class="flex items-center gap-2.5 rounded-full p-0.5 pr-3 transition-colors duration-300 hover:bg-brand-soft max-[479px]:pr-0.5" aria-label="প্রোফাইল">
-                        <span class="grid h-9 w-9 place-items-center rounded-full bg-linear-160 from-brand to-brand-deep font-serif text-lg font-semibold text-white">উ</span>
+                    <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-2.5 rounded-full p-0.5 pr-3 transition-colors duration-300 hover:bg-brand-soft max-[479px]:pr-0.5" aria-label="প্রোফাইল">
+                        @if (!empty(Auth::user()->images))
+                            <img src="{{ Auth::user()->images }}" alt="{{ Auth::user()->name }}" class="h-9 w-9 rounded-full object-cover">
+                        @else
+                            <span class="grid h-9 w-9 place-items-center rounded-full bg-linear-160 from-brand to-brand-deep font-serif text-lg font-semibold text-white">{{ mb_substr(Auth::user()->name, 0, 1, 'UTF-8') }}</span>
+                        @endif
                         <span class="hidden text-sm font-medium leading-tight text-body min-[480px]:block">
-                            উসুলি অ্যাডমিন<br>
-                            <span class="text-[0.72rem] font-normal text-faint">সম্পাদক</span>
+                            {{ Auth::user()->name }}<br>
+                            <span class="text-[0.72rem] font-normal text-faint">{{ Auth::user()->Role?->name ?? 'সম্পাদক' }}</span>
                         </span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </header>
