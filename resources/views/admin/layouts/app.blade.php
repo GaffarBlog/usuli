@@ -121,6 +121,16 @@
                 </svg>
                 সদস্য
             </a>
+
+            <a href="{{ route('admin.roles.view') }}" class="{{ str_starts_with($currentRoute, 'admin.roles') ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.roles') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                    <path d="M19 9H5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2z" />
+                    <path d="M12 14v4" />
+                    <path d="M8 18h8" />
+                </svg>
+                ভূমিকা
+            </a>
         </nav>
 
         <nav class="mt-auto flex flex-col gap-1 border-t border-white/10 px-3 py-4" aria-label="অ্যাকাউন্ট মেনু">
