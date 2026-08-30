@@ -6,7 +6,8 @@
     @php
         $eyebrowTick = 'inline-block h-0.5 w-[22px]';
         $metaText = 'text-[0.82rem] font-medium tracking-[0.01em] text-faint';
-        $readLink = 'group/link relative inline-flex w-fit items-center gap-2 font-semibold text-brand-deep after:absolute after:inset-x-0 after:-bottom-[3px] after:h-[1.5px] after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:after:scale-x-100 focus-visible:after:scale-x-100';
+        $readLink =
+            'group/link relative inline-flex w-fit items-center gap-2 font-semibold text-brand-deep after:absolute after:inset-x-0 after:-bottom-[3px] after:h-[1.5px] after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:after:scale-x-100 focus-visible:after:scale-x-100';
         $readLinkArrow = 'transition-transform duration-300 group-hover/link:translate-x-[5px]';
     @endphp
 
@@ -18,8 +19,7 @@
             </a>
 
             @if ($post->category)
-                <a href="{{ route('blog', ['category' => $post->category->slug]) }}"
-                   class="reveal mb-[18px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-brand-deep transition-colors duration-300 hover:text-brand">
+                <a href="{{ route('blog', ['category' => $post->category->slug]) }}" class="reveal mb-[18px] inline-flex items-center gap-2.5 text-[0.78rem] font-semibold tracking-[0.14em] text-brand-deep transition-colors duration-300 hover:text-brand">
                     <span class="{{ $eyebrowTick }} bg-brand" aria-hidden="true"></span>{{ $post->category->name }}
                 </a>
             @endif
@@ -40,7 +40,7 @@
             </div>
 
             @if ($post->excerpt)
-                <p class="reveal max-w-[62ch] text-[1.15rem] leading-[1.85] text-body">
+                <p class="reveal text-[1.15rem] leading-[1.85] text-body">
                     {{ $post->excerpt }}
                 </p>
             @endif
@@ -52,8 +52,7 @@
         <section class="pb-[clamp(32px,4vw,52px)]">
             <div class="shell">
                 <figure class="reveal overflow-hidden rounded-[14px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
-                    <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="eager"
-                         class="ph-img h-full w-full object-cover" style="aspect-ratio: 16/9;">
+                    <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="eager" class="ph-img h-full w-full object-cover" style="aspect-ratio: 16/9;">
                 </figure>
             </div>
         </section>
@@ -86,7 +85,7 @@
                             <a href="{{ route('blog.show', $post->slug) }}" class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
                                 @if ($post->image)
                                     <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="lazy"
-                                         class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
+                                        class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
                                 @endif
                             </a>
                             <div class="flex flex-col">
