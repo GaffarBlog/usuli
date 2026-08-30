@@ -14,10 +14,9 @@
         {{-- Header --}}
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-semibold text-ink">{{ $pageTitle }}</h1>
-            <a href="{{ route('admin.posts.create') }}"
-               class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+            <a href="{{ route('admin.posts.create') }}" class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12h14"/>
+                    <path d="M12 5v14M5 12h14" />
                 </svg>
                 নতুন লেখা
             </a>
@@ -27,16 +26,12 @@
         <form method="GET" class="flex flex-wrap items-end gap-4 rounded-xl border border-hairline bg-white p-4">
             <div class="flex-1 min-w-[200px]">
                 <label class="mb-1.5 block text-sm font-medium text-ink">অনুসন্ধান</label>
-                <input type="text"
-                       name="search"
-                       value="{{ request('search') }}"
-                       placeholder="লেখার শিরোনাম বা বিষয়বস্তু..."
-                       class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="লেখার শিরোনাম বা বিষয়বস্তু..."
+                    class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
             </div>
             <div class="min-w-[150px]">
                 <label class="mb-1.5 block text-sm font-medium text-ink">অবস্থা</label>
-                <select name="status"
-                        class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                <select name="status" class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
                     <option value="">সব</option>
                     <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>খসড়া</option>
                     <option value="published" {{ request('status') === 'published' ? 'selected' : '' }}>প্রকাশিত</option>
@@ -44,8 +39,7 @@
             </div>
             <div class="min-w-[150px]">
                 <label class="mb-1.5 block text-sm font-medium text-ink">বিষয়</label>
-                <select name="category_id"
-                        class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                <select name="category_id" class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
                     <option value="">সব</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
@@ -55,12 +49,10 @@
                 </select>
             </div>
             <div class="flex gap-2">
-                <button type="submit"
-                        class="rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                <button type="submit" class="rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
                     ফিল্টার
                 </button>
-                <a href="{{ route('admin.posts.index') }}"
-                   class="rounded-lg border border-hairline px-4 py-2.5 text-sm font-medium text-faint transition-colors hover:bg-gray-50">
+                <a href="{{ route('admin.posts.index') }}" class="rounded-lg border border-hairline px-4 py-2.5 text-sm font-medium text-faint transition-colors hover:bg-gray-50">
                     রিসেট
                 </a>
             </div>
@@ -108,23 +100,17 @@
                             </td>
                             <td class="px-4 py-3 text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('admin.posts.edit', $post) }}"
-                                       class="rounded-lg p-2 text-faint transition-colors hover:bg-brand/10 hover:text-brand"
-                                       title="সম্পাদনা">
+                                    <a href="{{ route('admin.posts.edit', $post) }}" class="rounded-lg p-2 text-faint transition-colors hover:bg-brand/10 hover:text-brand" title="সম্পাদনা">
                                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                                            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
                                         </svg>
                                     </a>
-                                    <form method="POST"
-                                          action="{{ route('admin.posts.destroy', $post) }}"
-                                          onsubmit="return confirm('আপনি কি নিশ্চিত এই লেখাটি মুছে ফেলতে চান?')">
+                                    <form method="POST" action="{{ route('admin.posts.destroy', $post) }}" onsubmit="return confirm('আপনি কি নিশ্চিত এই লেখাটি মুছে ফেলতে চান?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                                class="rounded-lg p-2 text-faint transition-colors hover:bg-red-50 hover:text-red-600"
-                                                title="মুছুন">
+                                        <button type="submit" class="rounded-lg p-2 text-faint transition-colors hover:bg-red-50 hover:text-red-600" title="মুছুন">
                                             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                                             </svg>
                                         </button>
                                     </form>
@@ -144,9 +130,7 @@
 
         {{-- Pagination --}}
         @if ($posts->hasPages())
-            <div class="flex justify-center">
-                {{ $posts->links() }}
-            </div>
+            {{ $posts->links() }}
         @endif
     </div>
 
