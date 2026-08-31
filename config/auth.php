@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\FrontendUser;
 use App\Models\User;
 
 return [
@@ -42,6 +43,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'frontend' => [
+            'driver' => 'session',
+            'provider' => 'frontend_users',
+        ],
     ],
 
     /*
@@ -65,6 +71,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+
+        'frontend_users' => [
+            'driver' => 'eloquent',
+            'model' => FrontendUser::class,
         ],
 
         // 'users' => [

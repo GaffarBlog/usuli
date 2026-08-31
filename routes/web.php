@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,12 @@ Route::middleware(['web'])->group(function () {
         Route::get('/contact', 'contact')->name('contact');
     });
 
-    // Route::get('/login', function () {
-    //     return view('auth.login');
-    // })->name('login');
+    Route::controller(AuthController::class)->middleware('guest:frontend')->group(function () {
+        Route::get('/login', 'showLogin')->name('frontend.login');
+        Route::post('/login', 'login')->name('frontend.login.post');
+        Route::get('/register', 'showRegister')->name('frontend.register');
+        Route::post('/register', 'register')->name('frontend.register.post');
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('frontend.logout')->middleware('auth:frontend');
 });
