@@ -66,12 +66,65 @@
                         <line x1="16.5" y1="16.5" x2="21" y2="21" />
                     </svg>
                 </button>
-                <a href="{{ route('frontend.login') }}" class="grid h-[42px] w-[42px] place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep" aria-label="লগইন">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                </a>
+                @if (Auth::guard('frontend')->check())
+                    @php $frontendUser = Auth::guard('frontend')->user(); @endphp
+                    <div class="relative" id="userDropdownWrapper">
+                        <button type="button" id="userDropdownToggle" class="flex items-center gap-2 rounded-full py-1.5 pl-1.5 pr-3 text-ink transition-colors duration-300 hover:bg-brand-soft" aria-haspopup="true" aria-expanded="false">
+                            @if (!empty($frontendUser->images))
+                                <img src="{{ $frontendUser->images }}" alt="{{ $frontendUser->name }}" class="h-[30px] w-[30px] rounded-full object-cover">
+                            @else
+                                <span class="grid h-[30px] w-[30px] shrink-0 place-items-center rounded-full bg-linear-160 from-brand to-brand-deep font-serif text-xs font-semibold text-white">
+                                    {{ mb_substr($frontendUser->name, 0, 1, 'UTF-8') }}
+                                </span>
+                            @endif
+                            <span class="hidden min-[1001px]:inline text-sm font-medium max-w-[100px] truncate">{{ $frontendUser->name }}</span>
+                            <svg class="hidden min-[1001px]:inline h-3.5 w-3.5 text-faint transition-transform duration-200" id="dropdownArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div id="userDropdownMenu" class="hidden absolute right-0 top-full mt-2 w-52 rounded-xl border border-hairline bg-white py-2 shadow-lg z-50 min-[1001px]:opacity-0 min-[1001px]:translate-y-1 min-[1001px]:transition-all min-[1001px]:duration-200">
+                            <div class="px-4 py-2.5 border-b border-hairline">
+                                <p class="text-sm font-medium text-ink truncate">{{ $frontendUser->name }}</p>
+                                <p class="text-xs text-faint truncate">{{ $frontendUser->email }}</p>
+                            </div>
+                            <a href="{{ route('frontend.dashboard.index') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-body transition-colors hover:bg-brand-soft hover:text-brand-deep">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                                </svg>
+                                ড্যাশবোর্ড
+                            </a>
+                            <a href="{{ route('frontend.dashboard.profile') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-body transition-colors hover:bg-brand-soft hover:text-brand-deep">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                প্রোফাইল
+                            </a>
+                            <div class="my-1.5 border-t border-hairline"></div>
+                            <form method="POST" action="{{ route('frontend.logout') }}">
+                                @csrf
+                                <button type="submit" class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-body transition-colors hover:bg-red-50 hover:text-red-600">
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                        <polyline points="16 17 21 12 16 7" />
+                                        <line x1="21" y1="12" x2="9" y2="12" />
+                                    </svg>
+                                    প্রস্থান
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('frontend.login') }}" class="grid h-[42px] w-[42px] place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep" aria-label="লগইন">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </a>
+                @endif
                 <button type="button" aria-label="মেনু" aria-expanded="false" aria-controls="mobileNav" id="menuToggle"
                     class="grid h-[42px] w-[42px] place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep min-[1001px]:hidden">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -281,6 +334,57 @@
 
                     applyFilter(currentFilter);
                     revealInView();
+                });
+            }
+
+            /* ---- User dropdown (hover on desktop, click on mobile) ---- */
+            var $wrapper = $('#userDropdownWrapper');
+            if ($wrapper.length) {
+                var $toggle = $('#userDropdownToggle');
+                var $menu = $('#userDropdownMenu');
+                var $arrow = $('#dropdownArrow');
+                var hoverTimer;
+
+                var showMenu = function() {
+                    clearTimeout(hoverTimer);
+                    $menu.removeClass('hidden').addClass('min-[1001px]:opacity-100 min-[1001px]:translate-y-0');
+                    $arrow.addClass('rotate-180');
+                    $toggle.attr('aria-expanded', 'true');
+                };
+
+                var hideMenu = function() {
+                    hoverTimer = setTimeout(function() {
+                        $menu.addClass('hidden').removeClass('min-[1001px]:opacity-100 min-[1001px]:translate-y-0');
+                        $arrow.removeClass('rotate-180');
+                        $toggle.attr('aria-expanded', 'false');
+                    }, 150);
+                };
+
+                $wrapper.on('mouseenter', function() {
+                    if ($(window).width() >= 1001) {
+                        showMenu();
+                    }
+                });
+
+                $wrapper.on('mouseleave', function() {
+                    if ($(window).width() >= 1001) {
+                        hideMenu();
+                    }
+                });
+
+                $toggle.on('click', function(e) {
+                    e.stopPropagation();
+                    if ($menu.hasClass('hidden')) {
+                        showMenu();
+                    } else {
+                        hideMenu();
+                    }
+                });
+
+                $(document).on('click', function(e) {
+                    if (!$wrapper.is(e.target) && $wrapper.has(e.target).length === 0) {
+                        hideMenu();
+                    }
                 });
             }
         });

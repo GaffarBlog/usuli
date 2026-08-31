@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,13 @@ Route::middleware(['web'])->group(function () {
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('frontend.logout')->middleware('auth:frontend');
+
+    Route::middleware(['auth:frontend'])->prefix('dashboard')->name('frontend.dashboard.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+        Route::get('/profile', [DashboardController::class, 'editProfile'])->name('profile');
+        Route::post('/profile', [DashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/password', [DashboardController::class, 'updatePassword'])->name('password.update');
+        Route::get('/writer', [DashboardController::class, 'writerRequest'])->name('writer');
+        Route::post('/writer', [DashboardController::class, 'submitWriterRequest'])->name('writer.submit');
+    });
 });

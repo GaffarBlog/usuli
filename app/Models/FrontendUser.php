@@ -20,6 +20,10 @@ class FrontendUser extends Authenticatable
         'images',
         'status',
         'locale',
+        'is_writer',
+        'writer_request_status',
+        'writer_request_reason',
+        'writer_requested_at',
     ];
 
     protected $hidden = [
@@ -32,6 +36,8 @@ class FrontendUser extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_writer' => 'boolean',
+            'writer_requested_at' => 'datetime',
         ];
     }
 }

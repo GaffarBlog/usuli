@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::guard('frontend')->check()) {
-            return redirect()->route('home.index');
+            return redirect()->route('frontend.dashboard.index');
         }
 
         return view('frontend.auth.login');
@@ -29,7 +29,7 @@ class AuthController extends Controller
         if (Auth::guard('frontend')->attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('home.index'));
+            return redirect()->intended(route('frontend.dashboard.index'));
         }
 
         return back()->withErrors([
@@ -40,7 +40,7 @@ class AuthController extends Controller
     public function showRegister()
     {
         if (Auth::guard('frontend')->check()) {
-            return redirect()->route('home.index');
+            return redirect()->route('frontend.dashboard.index');
         }
 
         return view('frontend.auth.register');
@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         Auth::guard('frontend')->login($user);
 
-        return redirect()->route('home.index');
+        return redirect()->route('frontend.dashboard.index');
     }
 
     public function logout(Request $request)
