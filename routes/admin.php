@@ -64,6 +64,7 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
         Route::get('/', 'index')->name('index');
         Route::put('/', 'update')->name('update');
         Route::get('/posts/search', 'searchPosts')->name('posts.search');
+        Route::get('/categories/search', 'searchCategories')->name('categories.search');
     });
 
     // Route::get('/', [DashboardController::class, '__invoke'])->name('admin.dashboard');

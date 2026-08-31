@@ -14,18 +14,9 @@ class HomeController extends Controller
         '5' => '৫', '6' => '৬', '7' => '৭', '8' => '৮', '9' => '৯',
     ];
 
-    private array $navItems = [
-        ['label' => 'প্রচ্ছদ', 'href' => '/'],
-        ['label' => 'গল্প', 'href' => '/blog'],
-        ['label' => 'মতামত'],
-        ['label' => 'জীবনযাপন'],
-        ['label' => 'সংস্কৃতি'],
-        ['label' => 'প্রযুক্তি'],
-        ['label' => 'ভ্রমণ'],
-    ];
-
     public function index(): Response
     {
+        $navItems = buildNavbarItems();
         $posts = Post::published()
             ->with('category')
             ->latest('published_at')
@@ -49,7 +40,7 @@ class HomeController extends Controller
         }
 
         return response()->view('home', [
-            'navItems' => $this->navItems,
+            'navItems' => $navItems,
             'activeNav' => 'প্রচ্ছদ',
             'articles' => $posts,
             'topics' => $topics,
@@ -89,7 +80,7 @@ class HomeController extends Controller
         $totalBn = strtr((string) $posts->total(), $this->bnDigits);
 
         return response()->view('blog', [
-            'navItems' => $this->navItems,
+            'navItems' => buildNavbarItems(),
             'activeNav' => 'গল্প',
             'totalBn' => $totalBn,
             'filters' => $filters,
@@ -109,7 +100,7 @@ class HomeController extends Controller
             ->get();
 
         return response()->view('post', [
-            'navItems' => $this->navItems,
+            'navItems' => buildNavbarItems(),
             'activeNav' => $post->category?->name ?? 'গল্প',
             'post' => $post,
             'related' => $related,
@@ -119,7 +110,7 @@ class HomeController extends Controller
     public function contact(): Response
     {
         return response()->view('contact', [
-            'navItems' => $this->navItems,
+            'navItems' => buildNavbarItems(),
             'activeNav' => 'যোগাযোগ',
         ]);
     }

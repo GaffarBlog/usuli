@@ -10,22 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
-    private array $navItems = [
-        ['label' => 'প্রচ্ছদ', 'href' => '/'],
-        ['label' => 'গল্প', 'href' => '/blog'],
-        ['label' => 'মতামত'],
-        ['label' => 'জীবনযাপন'],
-        ['label' => 'সংস্কৃতি'],
-        ['label' => 'প্রযুক্তি'],
-        ['label' => 'ভ্রমণ'],
-    ];
-
     public function index(): Response
     {
         $user = Auth::guard('frontend')->user();
 
         return response()->view('frontend.dashboard.index', [
-            'navItems' => $this->navItems,
+            'navItems' => buildNavbarItems(),
             'user' => $user,
             'activeNav' => 'ড্যাশবোর্ড',
         ]);
@@ -36,7 +26,7 @@ class DashboardController extends Controller
         $user = Auth::guard('frontend')->user();
 
         return response()->view('frontend.dashboard.profile', [
-            'navItems' => $this->navItems,
+            'navItems' => buildNavbarItems(),
             'user' => $user,
             'activeNav' => 'প্রোফাইল',
         ]);
@@ -93,7 +83,7 @@ class DashboardController extends Controller
         $user = Auth::guard('frontend')->user();
 
         return response()->view('frontend.dashboard.writer', [
-            'navItems' => $this->navItems,
+            'navItems' => buildNavbarItems(),
             'user' => $user,
             'activeNav' => 'লেখক অনুরোধ',
         ]);

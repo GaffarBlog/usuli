@@ -8,6 +8,7 @@
         $tabs = [
             'site' => 'সাইট সেটিংস',
             'home' => 'হোম পেজ',
+            'navbar' => 'নেভার',
             'contact' => 'যোগাযোগ পেজ',
             'footer' => 'ফুটার',
             'social' => 'সোশ্যাল মিডিয়া',
@@ -264,6 +265,91 @@
                 </div>
             </form>
 
+        @elseif ($activeTab === 'navbar')
+            <div class="space-y-6 rounded-xl border border-hairline bg-white p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-semibold text-ink">নেভার মেনু</h2>
+                        <p class="text-sm text-faint">ড্র্যাগ করে মেনুর অর্ডার পরিবর্তন করুন। হোম ও ব্লগ মুছে ফেলা যাবে না।</p>
+                    </div>
+                    <button type="button" id="addCategoryBtn"
+                        class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                        ক্যাটাগরি যোগ করুন
+                    </button>
+                </div>
+
+                {{-- Add Category Modal --}}
+                <div id="addCategoryModal" class="hidden">
+                    <div class="rounded-lg border border-hairline bg-gray-50 p-4">
+                        <label class="mb-2 block text-sm font-medium text-ink">ক্যাটাগরি খুঁজুন</label>
+                        <div class="relative">
+                            <input type="text" id="catSearchInput" placeholder="ক্যাটাগরির নাম লিখুন..."
+                                class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20">
+                            <div id="catSearchResults" class="absolute z-10 mt-1 hidden w-full rounded-lg border border-hairline bg-white shadow-lg max-h-60 overflow-y-auto"></div>
+                        </div>
+                        <button type="button" id="cancelAddCategory" class="mt-3 text-sm text-faint hover:text-ink">বাতিল করুন</button>
+                    </div>
+                </div>
+
+                {{-- Sortable Navbar Items --}}
+                <form id="navbarForm" method="POST" action="{{ route('admin.settings.update', ['tab' => 'navbar']) }}">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="tab" value="navbar">
+                    <input type="hidden" id="navbarItemsJson" name="navbar_items_json" value="{{ json_encode($navbarItems) }}">
+
+                    <ul id="navbarList" class="space-y-2">
+                        @forelse ($navbarItems as $index => $item)
+                            <li class="navbar-item flex items-center gap-3 rounded-lg border border-hairline bg-white px-4 py-3 transition-colors hover:border-brand/40"
+                                data-type="{{ $item['type'] ?? 'category' }}"
+                                data-category-id="{{ $item['category_id'] ?? '' }}"
+                                data-index="{{ $index }}">
+                                {{-- Drag Handle --}}
+                                <span class="sortable-handle cursor-grab text-faint hover:text-ink">
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8-14a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+                                </span>
+
+                                {{-- Type Badge --}}
+                                @if (($item['type'] ?? '') === 'home')
+                                    <span class="shrink-0 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">হোম</span>
+                                @elseif (($item['type'] ?? '') === 'blog')
+                                    <span class="shrink-0 rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">ব্লগ</span>
+                                @else
+                                    <span class="shrink-0 rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700">ক্যাটাগরি</span>
+                                @endif
+
+                                {{-- Label Input --}}
+                                <input type="text" class="navbar-label flex-1 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
+                                    value="{{ $item['label'] ?? '' }}" placeholder="মেনু টেক্সট">
+
+                                {{-- Delete Button --}}
+                                @if (($item['type'] ?? '') !== 'home' && ($item['type'] ?? '') !== 'blog')
+                                    <button type="button" class="remove-navbar-item shrink-0 rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500"
+                                        title="মুছে ফেলুন">
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                                    </button>
+                                @endif
+                            </li>
+                        @empty
+                            <li class="py-8 text-center text-sm text-faint">কোনো মেনু আইটেম নেই। "ক্যাটাগরি যোগ করুন" বাটনে ক্লিক করুন।</li>
+                        @endforelse
+                    </ul>
+
+                    {{-- Buttons --}}
+                    <div class="flex items-center gap-3 pt-4 mt-4 border-t border-hairline">
+                        <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                <polyline points="17 21 17 13 7 13 7 21" />
+                                <polyline points="7 3 7 8 15 8" />
+                            </svg>
+                            সংরক্ষণ করুন
+                        </button>
+                    </div>
+                </form>
+            </div>
+
         @elseif ($activeTab === 'social')
             <form method="POST" action="{{ route('admin.settings.update', ['tab' => 'social']) }}" class="space-y-6 rounded-xl border border-hairline bg-white p-6">
                 @csrf
@@ -367,11 +453,137 @@
     </div>
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
     <script>
         $(function() {
             var searchUrl = '{{ route("admin.settings.posts.search") }}';
+            var catSearchUrl = '{{ route("admin.settings.categories.search") }}';
             var debounceTimer;
 
+            {{-- ========== Navbar Tab Logic ========== --}}
+            if ($('#navbarList').length) {
+                var sortable = new Sortable(document.getElementById('navbarList'), {
+                    handle: '.sortable-handle',
+                    animation: 150,
+                    ghostClass: 'opacity-40',
+                    onEnd: function() {
+                        syncNavbarForm();
+                    }
+                });
+
+                function syncNavbarForm() {
+                    var items = [];
+                    $('#navbarList .navbar-item').each(function() {
+                        var $el = $(this);
+                        var item = {
+                            type: $el.data('type'),
+                            label: $el.find('.navbar-label').val(),
+                            url: $el.data('type') === 'home' ? '/' : ($el.data('type') === 'blog' ? '/blog' : null),
+                            category_id: $el.data('category-id') || null
+                        };
+                        items.push(item);
+                    });
+                    $('#navbarItemsJson').val(JSON.stringify(items));
+                }
+
+                $('#navbarForm').on('submit', function() {
+                    syncNavbarForm();
+                    var items = JSON.parse($('#navbarItemsJson').val() || '[]');
+                    var $form = $(this);
+                    $.each(items, function(i, item) {
+                        $form.append('<input type="hidden" name="navbar_items[' + i + '][type]" value="' + (item.type || '') + '">');
+                        $form.append('<input type="hidden" name="navbar_items[' + i + '][label]" value="' + (item.label || '') + '">');
+                        $form.append('<input type="hidden" name="navbar_items[' + i + '][url]" value="' + (item.url || '') + '">');
+                        if (item.category_id) {
+                            $form.append('<input type="hidden" name="navbar_items[' + i + '][category_id]" value="' + item.category_id + '">');
+                        }
+                    });
+                });
+
+                {{-- Remove navbar item --}}
+                $('#navbarList').on('click', '.remove-navbar-item', function() {
+                    $(this).closest('.navbar-item').fadeOut(200, function() {
+                        $(this).remove();
+                        syncNavbarForm();
+                    });
+                });
+
+                {{-- Add Category --}}
+                var existingCatIds = [];
+                $('#navbarList .navbar-item').each(function() {
+                    if ($(this).data('category-id')) {
+                        existingCatIds.push($(this).data('category-id'));
+                    }
+                });
+
+                $('#addCategoryBtn').on('click', function() {
+                    $('#addCategoryModal').removeClass('hidden');
+                    $('#catSearchInput').focus();
+                });
+
+                $('#cancelAddCategory').on('click', function() {
+                    $('#addCategoryModal').addClass('hidden');
+                    $('#catSearchInput').val('');
+                    $('#catSearchResults').addClass('hidden').empty();
+                });
+
+                $('#catSearchInput').on('keyup', function() {
+                    var q = $(this).val().trim();
+                    clearTimeout(debounceTimer);
+                    if (q.length < 1) {
+                        $('#catSearchResults').addClass('hidden').empty();
+                        return;
+                    }
+                    debounceTimer = setTimeout(function() {
+                        $.get(catSearchUrl, { q: q, existing: existingCatIds }, function(data) {
+                            var $results = $('#catSearchResults');
+                            $results.empty();
+                            if (data.length === 0) {
+                                $results.append('<div class="px-4 py-3 text-sm text-faint">কোনো ক্যাটাগরি পাওয়া যায়নি।</div>');
+                            } else {
+                                $.each(data, function(i, cat) {
+                                    $results.append(
+                                        '<div class="flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors hover:bg-gray-50 cat-select-item" data-id="' + cat.id + '" data-name="' + cat.name.replace(/"/g, '&quot;') + '">' +
+                                        '<span class="shrink-0 rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700">ক্যাটাগরি</span>' +
+                                        '<span class="text-sm font-medium text-ink">' + cat.name + '</span>' +
+                                        '</div>'
+                                    );
+                                });
+                            }
+                            $results.removeClass('hidden');
+                        });
+                    }, 300);
+                });
+
+                $('#catSearchResults').on('click', '.cat-select-item', function() {
+                    var id = $(this).data('id');
+                    var name = $(this).data('name');
+                    var index = $('#navbarList .navbar-item').length;
+
+                    var html = '<li class="navbar-item flex items-center gap-3 rounded-lg border border-hairline bg-white px-4 py-3 transition-colors hover:border-brand/40" data-type="category" data-category-id="' + id + '" data-index="' + index + '">' +
+                        '<span class="sortable-handle cursor-grab text-faint hover:text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8-14a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg></span>' +
+                        '<span class="shrink-0 rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700">ক্যাটাগরি</span>' +
+                        '<input type="text" class="navbar-label flex-1 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" value="' + name + '">' +
+                        '<button type="button" class="remove-navbar-item shrink-0 rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500" title="মুছে ফেলুন"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
+                        '</li>';
+
+                    $('#navbarList').append(html);
+                    existingCatIds.push(id);
+
+                    $('#catSearchInput').val('');
+                    $('#catSearchResults').addClass('hidden').empty();
+                    $('#addCategoryModal').addClass('hidden');
+                    syncNavbarForm();
+                });
+
+                $(document).on('click', function(e) {
+                    if (!$(e.target).closest('#catSearchInput').length && !$(e.target).closest('#catSearchResults').length) {
+                        $('#catSearchResults').addClass('hidden');
+                    }
+                });
+            }
+
+            {{-- ========== Site Logo Preview ========== --}}
             $('#site_logo').on('change', function(e) {
                 var file = e.target.files[0];
                 if (file) {

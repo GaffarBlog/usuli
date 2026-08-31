@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\Setting;
 use App\Services\SettingService;
@@ -25,7 +26,10 @@ class SettingController extends Controller
             $featurePost = Post::find($settings['home_feature_post_id']);
         }
 
-        return view('admin.settings.index', compact('settings', 'heroPost', 'featurePost'));
+        $navbarItems = json_decode($settings['navbar_items'] ?? '[]', true);
+        $categories = Category::active()->topLevel()->orderBy('name')->get();
+
+        return view('admin.settings.index', compact('settings', 'heroPost', 'featurePost', 'navbarItems', 'categories'));
     }
 
     public function update(Request $request, SettingService $service)
@@ -68,6 +72,23 @@ class SettingController extends Controller
             }
         }
 
+        if ($tab === 'navbar') {
+            $items = $request->input('navbar_items', []);
+
+            $validated = collect($items)->map(function ($item) {
+                return [
+                    'type' => in_array($item['type'] ?? '', ['home', 'blog', 'category']) ? $item['type'] : 'category',
+                    'label' => $item['label'] ?? '',
+                    'url' => $item['url'] ?? null,
+                    'category_id' => isset($item['category_id']) ? (int) $item['category_id'] : null,
+                ];
+            })->toArray();
+
+            $service->set('navbar_items', json_encode($validated), 'text');
+
+            return redirect()->route('admin.settings.index', ['tab' => 'navbar'])->with('success', 'নেভার মেনু সংরক্ষিত হয়েছে।');
+        }
+
         if ($tab === 'social') {
             $request->validate([
                 'social_facebook' => 'nullable|url|max:500',
@@ -98,5 +119,20 @@ class SettingController extends Controller
             ->get(['id', 'title', 'slug', 'image', 'excerpt']);
 
         return response()->json($posts);
+    }
+
+    public function searchCategories(Request $request): JsonResponse
+    {
+        $query = $request->input('q', '');
+        $existing = $request->input('existing', []);
+
+        $categories = Category::active()
+            ->topLevel()
+            ->whereNotIn('id', $existing)
+            ->where('name', 'like', "%{$query}%")
+            ->limit(10)
+            ->get(['id', 'name', 'slug']);
+
+        return response()->json($categories);
     }
 }

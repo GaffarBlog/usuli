@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Services\SettingService;
 use App\Services\TranslationService;
 use Illuminate\Support\Facades\Auth;
@@ -334,6 +335,56 @@ if (! function_exists('GetSettingsGroup')) {
     function GetSettingsGroup($key)
     {
         return app(SettingService::class)->getGroup($key);
+    }
+}
+if (! function_exists('buildNavbarItems')) {
+    function buildNavbarItems(): array
+    {
+        $default = [
+            ['label' => 'প্রচ্ছদ', 'href' => '/'],
+            ['label' => 'গল্প', 'href' => '/blog'],
+        ];
+
+        try {
+            $raw = GetSetting('navbar_items');
+        } catch (Throwable $e) {
+            return $default;
+        }
+
+        $items = is_string($raw) ? json_decode($raw, true) : ($raw ?? []);
+
+        if (empty($items)) {
+            return [
+                ['label' => 'প্রচ্ছদ', 'href' => '/'],
+                ['label' => 'গল্প', 'href' => '/blog'],
+            ];
+        }
+
+        $categoryIds = collect($items)->where('type', 'category')->pluck('category_id')->filter()->values()->all();
+        $categories = $categoryIds
+            ? Category::whereIn('id', $categoryIds)->get()->keyBy('id')
+            : collect();
+
+        return collect($items)->map(function ($item) use ($categories) {
+            $type = $item['type'] ?? 'category';
+
+            if ($type === 'home') {
+                return ['label' => $item['label'] ?? 'প্রচ্ছদ', 'href' => '/'];
+            }
+
+            if ($type === 'blog') {
+                return ['label' => $item['label'] ?? 'গল্প', 'href' => '/blog'];
+            }
+
+            $catId = $item['category_id'] ?? null;
+            $cat = $categories->get($catId);
+
+            if (! $cat) {
+                return null;
+            }
+
+            return ['label' => $cat->name, 'href' => route('blog', ['category' => $cat->slug])];
+        })->filter()->values()->all();
     }
 }
 if (! function_exists('rename_uploaded_image')) {
