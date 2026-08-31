@@ -68,6 +68,22 @@ class SettingController extends Controller
             }
         }
 
+        if ($tab === 'social') {
+            $request->validate([
+                'social_facebook' => 'nullable|url|max:500',
+                'social_twitter' => 'nullable|url|max:500',
+                'social_instagram' => 'nullable|url|max:500',
+                'social_youtube' => 'nullable|url|max:500',
+                'social_telegram' => 'nullable|url|max:500',
+            ]);
+
+            $service->set('social_facebook', $request->social_facebook, 'string');
+            $service->set('social_twitter', $request->social_twitter, 'string');
+            $service->set('social_instagram', $request->social_instagram, 'string');
+            $service->set('social_youtube', $request->social_youtube, 'string');
+            $service->set('social_telegram', $request->social_telegram, 'string');
+        }
+
         return redirect()->route('admin.settings.index', ['tab' => $tab])->with('success', 'সেটিংস সংরক্ষিত হয়েছে।');
     }
 

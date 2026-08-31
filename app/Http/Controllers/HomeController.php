@@ -115,4 +115,12 @@ class HomeController extends Controller
             'related' => $related,
         ]);
     }
+
+    public function contact(): Response
+    {
+        return response()->view('contact', [
+            'navItems' => $this->navItems,
+            'activeNav' => 'যোগাযোগ',
+        ]);
+    }
 }

@@ -21,6 +21,7 @@
     @php
         $brandMarkPath = 'M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64';
         $brandAccentPath = 'M40 6 C 42 4 45 4 46 7';
+        $siteLogo = GetSetting('site_logo');
         $menuItem = 'flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-[0.95rem] font-medium text-footer-mut transition-colors duration-200 hover:bg-white/[0.06] hover:text-white';
         $menuItemActive = 'flex items-center gap-3 rounded-lg bg-brand/15 px-3.5 py-2.5 text-[0.95rem] font-semibold text-white transition-colors duration-200';
         $iconBtn = 'grid h-10 w-10 place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep';
@@ -33,11 +34,15 @@
         class="fixed inset-y-0 left-0 z-[300] flex w-[264px] -translate-x-full flex-col overflow-y-auto border-r border-white/[0.06] bg-footer transition-transform duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] will-change-transform data-[state=open]:translate-x-0 lg:translate-x-0">
         <div class="flex items-center justify-between gap-3 px-5 pb-4 pt-6">
             <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
-                <svg class="h-[42px] w-[28px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
-                    <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]" d="{{ $brandMarkPath }}" fill="none" stroke="#4fb6cf" stroke-width="6.5"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="{{ $brandAccentPath }}" fill="none" stroke="#4fb6cf" stroke-width="4" stroke-linecap="round" />
-                </svg>
+                @if ($siteLogo)
+                    <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[42px] w-auto shrink-0 object-contain">
+                @else
+                    <svg class="h-[42px] w-[28px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
+                        <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]" d="{{ $brandMarkPath }}" fill="none" stroke="#4fb6cf" stroke-width="6.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="{{ $brandAccentPath }}" fill="none" stroke="#4fb6cf" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                @endif
                 <span class="font-serif text-[1.45rem] font-semibold leading-none tracking-[-0.01em] text-footer-ink">উসুলি</span>
             </a>
             <button type="button" id="adminSidebarClose" aria-label="মেনু বন্ধ করুন" class="{{ $iconBtn }} !text-footer-mut hover:!bg-white/[0.06] hover:!text-white lg:hidden">
