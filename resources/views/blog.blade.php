@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('layouts.main')
 
 @section('title', 'সব লেখা — উসুলি')
 
@@ -6,7 +6,8 @@
     @php
         $eyebrowTick = 'inline-block h-0.5 w-[22px]';
         $metaText = 'text-[0.82rem] font-medium tracking-[0.01em] text-faint';
-        $filterPill = 'cursor-pointer rounded-full border border-brand-line bg-white px-[18px] py-2 text-[0.95rem] font-medium text-body transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand-soft hover:text-brand-deep aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-white';
+        $filterPill =
+            'cursor-pointer rounded-full border border-brand-line bg-white px-[18px] py-2 text-[0.95rem] font-medium text-body transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand-soft hover:text-brand-deep aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-white';
     @endphp
 
     <!-- ============ PAGE HEADER ============ -->
@@ -38,9 +39,7 @@
         <ul class="reveal flex flex-wrap gap-3" aria-label="বিষয়ভিত্তিক ফিল্টার">
             @foreach ($filters as $filter)
                 <li>
-                    <a href="{{ $filter['value'] === 'all' ? route('blog') : route('blog', ['category' => $filter['value']]) }}"
-                       aria-pressed="{{ $filter['active'] ? 'true' : 'false' }}"
-                       class="{{ $filterPill }}">
+                    <a href="{{ $filter['value'] === 'all' ? route('blog') : route('blog', ['category' => $filter['value']]) }}" aria-pressed="{{ $filter['active'] ? 'true' : 'false' }}" class="{{ $filterPill }}">
                         {{ $filter['label'] }}
                     </a>
                 </li>
@@ -53,11 +52,10 @@
         <div class="shell grid grid-cols-1 gap-[clamp(26px,3vw,40px)] min-[621px]:grid-cols-2 min-[1001px]:grid-cols-3">
             @forelse ($posts as $post)
                 <article class="reveal group flex flex-col">
-                    <a href="{{ route('blog.show', $post->slug) }}" tabindex="-1" aria-hidden="true"
-                       class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
+                    <a href="{{ route('blog.show', $post->slug) }}" tabindex="-1" aria-hidden="true" class="ph relative mb-[18px] block aspect-[3/2] overflow-hidden rounded-[10px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
                         @if ($post->image)
                             <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="lazy"
-                                 class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
+                                class="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105 motion-reduce:transition-none">
                         @endif
                     </a>
                     <div class="flex flex-col">

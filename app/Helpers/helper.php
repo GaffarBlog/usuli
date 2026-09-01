@@ -365,7 +365,9 @@ if (! function_exists('buildNavbarItems')) {
             ? Category::whereIn('id', $categoryIds)->get()->keyBy('id')
             : collect();
 
-        return collect($items)->map(function ($item) use ($categories) {
+        return collect($items)->filter(function ($item) {
+            return ($item['type'] ?? '') === 'category' || ($item['enabled'] ?? true);
+        })->map(function ($item) use ($categories) {
             $type = $item['type'] ?? 'category';
 
             if ($type === 'home') {
@@ -378,6 +380,10 @@ if (! function_exists('buildNavbarItems')) {
 
             if ($type === 'about') {
                 return ['label' => $item['label'] ?? 'আমাদের সম্পর্কে', 'href' => '/about'];
+            }
+
+            if ($type === 'contact') {
+                return ['label' => $item['label'] ?? 'যোগাযোগ', 'href' => '/contact'];
             }
 
             $catId = $item['category_id'] ?? null;

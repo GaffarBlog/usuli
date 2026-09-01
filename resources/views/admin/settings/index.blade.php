@@ -270,7 +270,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-lg font-semibold text-ink">নেভার মেনু</h2>
-                        <p class="text-sm text-faint">ড্র্যাগ করে মেনুর অর্ডার পরিবর্তন করুন। হোম ও ব্লগ মুছে ফেলা যাবে না।</p>
+                        <p class="text-sm text-faint">ড্র্যাগ করে মেনুর অর্ডার পরিবর্তন করুন। হোম, ব্লগ, আমাদের সম্পর্কে ও যোগাযোগ মুছে ফেলা যাবে না।</p>
                     </div>
                     <button type="button" id="addCategoryBtn"
                         class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
@@ -315,6 +315,10 @@
                                     <span class="shrink-0 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">হোম</span>
                                 @elseif (($item['type'] ?? '') === 'blog')
                                     <span class="shrink-0 rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">ব্লগ</span>
+                                @elseif (($item['type'] ?? '') === 'about')
+                                    <span class="shrink-0 rounded-md bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">আমাদের সম্পর্কে</span>
+                                @elseif (($item['type'] ?? '') === 'contact')
+                                    <span class="shrink-0 rounded-md bg-rose-50 px-2 py-0.5 text-xs font-medium text-rose-700">যোগাযোগ</span>
                                 @else
                                     <span class="shrink-0 rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700">ক্যাটাগরি</span>
                                 @endif
@@ -323,8 +327,17 @@
                                 <input type="text" class="navbar-label flex-1 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
                                     value="{{ $item['label'] ?? '' }}" placeholder="মেনু টেক্সট">
 
+                                {{-- Toggle (about & contact only) --}}
+                                @if (in_array($item['type'] ?? '', ['about', 'contact']))
+                                    <label class="relative inline-flex shrink-0 cursor-pointer items-center">
+                                        <input type="checkbox" class="navbar-enabled sr-only peer"
+                                            {{ ($item['enabled'] ?? true) ? 'checked' : '' }}>
+                                        <div class="h-5 w-9 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all peer-checked:bg-brand peer-checked:after:translate-x-full"></div>
+                                    </label>
+                                @endif
+
                                 {{-- Delete Button --}}
-                                @if (($item['type'] ?? '') !== 'home' && ($item['type'] ?? '') !== 'blog')
+                                @if (! in_array($item['type'] ?? '', ['home', 'blog', 'about', 'contact']))
                                     <button type="button" class="remove-navbar-item shrink-0 rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500"
                                         title="মুছে ফেলুন">
                                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -580,11 +593,16 @@
                     var items = [];
                     $('#navbarList .navbar-item').each(function() {
                         var $el = $(this);
+                        var type = $el.data('type');
+                        var urlMap = { home: '/', blog: '/blog', about: '/about', contact: '/contact' };
+                        var $toggle = $el.find('.navbar-enabled');
+                        var enabled = type === 'category' ? true : ($toggle.length ? $toggle.prop('checked') : true);
                         var item = {
-                            type: $el.data('type'),
+                            type: type,
                             label: $el.find('.navbar-label').val(),
-                            url: $el.data('type') === 'home' ? '/' : ($el.data('type') === 'blog' ? '/blog' : null),
-                            category_id: $el.data('category-id') || null
+                            url: urlMap[type] || null,
+                            category_id: $el.data('category-id') || null,
+                            enabled: enabled
                         };
                         items.push(item);
                     });
@@ -602,8 +620,32 @@
                         if (item.category_id) {
                             $form.append('<input type="hidden" name="navbar_items[' + i + '][category_id]" value="' + item.category_id + '">');
                         }
+                        if (item.type !== 'category') {
+                            $form.append('<input type="hidden" name="navbar_items[' + i + '][enabled]" value="' + (item.enabled ? '1' : '0') + '">');
+                        }
                     });
                 });
+
+                var protectedTypes = [
+                    { type: 'about', label: 'আমাদের সম্পর্কে', badge: 'আমাদের সম্পর্কে', badgeClass: 'bg-amber-50 text-amber-700' },
+                    { type: 'contact', label: 'যোগাযোগ', badge: 'যোগাযোগ', badgeClass: 'bg-rose-50 text-rose-700' }
+                ];
+                var existingTypes = [];
+                $('#navbarList .navbar-item').each(function() {
+                    existingTypes.push($(this).data('type'));
+                });
+                $.each(protectedTypes, function(i, p) {
+                    if (existingTypes.indexOf(p.type) === -1) {
+                        var html = '<li class="navbar-item flex items-center gap-3 rounded-lg border border-hairline bg-white px-4 py-3 transition-colors hover:border-brand/40" data-type="' + p.type + '" data-category-id="">' +
+                            '<span class="sortable-handle cursor-grab text-faint hover:text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8-14a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg></span>' +
+                            '<span class="shrink-0 rounded-md ' + p.badgeClass + ' px-2 py-0.5 text-xs font-medium">' + p.badge + '</span>' +
+                            '<input type="text" class="navbar-label flex-1 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" value="' + p.label + '">' +
+                            '<label class="relative inline-flex shrink-0 cursor-pointer items-center"><input type="checkbox" class="navbar-enabled sr-only peer" checked><div class="h-5 w-9 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all peer-checked:bg-brand peer-checked:after:translate-x-full"></div></label>' +
+                            '</li>';
+                        $('#navbarList').append(html);
+                    }
+                });
+                syncNavbarForm();
 
                 {{-- Remove navbar item --}}
                 $('#navbarList').on('click', '.remove-navbar-item', function() {
@@ -685,6 +727,10 @@
                     if (!$(e.target).closest('#catSearchInput').length && !$(e.target).closest('#catSearchResults').length) {
                         $('#catSearchResults').addClass('hidden');
                     }
+                });
+
+                $('#navbarList').on('change', '.navbar-enabled', function() {
+                    syncNavbarForm();
                 });
             }
 

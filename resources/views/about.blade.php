@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('layouts.main')
 
 @section('title', 'আমাদের সম্পর্কে — উসুলি')
 
@@ -52,7 +52,8 @@
                     <div class="reveal flex flex-col items-center gap-4 rounded-xl border border-hairline bg-white px-6 py-8 text-center transition-shadow duration-300 hover:shadow-md">
                         <div class="grid h-14 w-14 place-items-center rounded-full bg-brand-soft">
                             <svg class="h-6 w-6 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                <path
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
                         </div>
                         <h3 class="text-sm font-semibold text-ink">সাহিত্যচর্চা</h3>
@@ -130,12 +131,10 @@
                         আমাদের সঙ্গে যুক্ত হতে চাইলে এখনই নিবন্ধন করুন অথবা যোগাযোগ করুন।
                     </p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="{{ route('frontend.register') }}"
-                            class="rounded-lg bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                        <a href="{{ route('frontend.register') }}" class="rounded-lg bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
                             নিবন্ধন করুন
                         </a>
-                        <a href="{{ route('contact') }}"
-                            class="rounded-lg border border-hairline bg-white px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-gray-50">
+                        <a href="{{ route('contact') }}" class="rounded-lg border border-hairline bg-white px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-gray-50">
                             যোগাযোগ করুন
                         </a>
                     </div>

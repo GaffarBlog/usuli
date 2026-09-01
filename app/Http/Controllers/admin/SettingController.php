@@ -77,11 +77,14 @@ class SettingController extends Controller
             $items = $request->input('navbar_items', []);
 
             $validated = collect($items)->map(function ($item) {
+                $type = $item['type'] ?? '';
+
                 return [
-                    'type' => in_array($item['type'] ?? '', ['home', 'blog', 'category']) ? $item['type'] : 'category',
+                    'type' => in_array($type, ['home', 'blog', 'category', 'about', 'contact']) ? $type : 'category',
                     'label' => $item['label'] ?? '',
                     'url' => $item['url'] ?? null,
                     'category_id' => isset($item['category_id']) ? (int) $item['category_id'] : null,
+                    'enabled' => $type === 'category' ? true : ($item['enabled'] ?? true),
                 ];
             })->toArray();
 
