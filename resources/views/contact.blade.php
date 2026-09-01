@@ -1,11 +1,14 @@
 @extends('layouts.site')
 
+@section('title', 'যোগাযোগ — উসুলি')
+
 @section('content')
     @php
         $phone = GetSetting('phone');
         $email = GetSetting('email');
         $address = GetSetting('address');
         $socials = GetSettingsGroup('social_');
+        $frontendUser = Auth::guard('frontend')->user();
     @endphp
 
     <!-- ============ CONTACT HERO ============ -->
@@ -19,8 +22,98 @@
                     আমাদের সঙ্গে যোগাযোগ করুন
                 </h1>
                 <p class="text-[1.1rem] leading-[1.85] text-body">
-                    কোনো প্রশ্ন, মতামত অথবা সহযোগিতার প্রস্তাব থাকলে নিচের যেকোনো মাধ্যমে আমাদের সঙ্গে যোগাযোগ করতে পারেন।
+                    কোনো প্রশ্ন, মতামত অথবা সহযোগিতার প্রস্তাব থাকলে নিচের ফর্মটি পূরণ করুন।
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT FORM ============ -->
+    <section class="pb-[clamp(48px,6vw,86px)]" aria-labelledby="formTitle">
+        <div class="shell">
+            <div class="mx-auto max-w-2xl">
+                {{-- Flash Message --}}
+                @if (session('success'))
+                    <div id="flash-message" class="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <div class="rounded-2xl border border-hairline bg-white p-[clamp(24px,4vw,48px)] shadow-sm">
+                    <h2 class="mb-6 font-serif text-[clamp(1.2rem,2vw,1.5rem)] font-semibold text-ink" id="formTitle">
+                        বার্তা পাঠান
+                    </h2>
+
+                    <form method="POST" action="{{ route('contact.store') }}" class="space-y-5">
+                        @csrf
+
+                        {{-- Name --}}
+                        <div>
+                            <label for="name" class="mb-1.5 block text-sm font-medium text-ink">নাম <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" required maxlength="255"
+                                value="{{ old('name', $frontendUser?->name ?? '') }}"
+                                placeholder="আপনার নাম লিখুন"
+                                class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                            @error('name')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Subject --}}
+                        <div>
+                            <label for="subject" class="mb-1.5 block text-sm font-medium text-ink">বিষয় <span class="text-red-500">*</span></label>
+                            <input type="text" id="subject" name="subject" required maxlength="255"
+                                value="{{ old('subject') }}"
+                                placeholder="বার্তার বিষয় লিখুন"
+                                class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                            @error('subject')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Email + Phone (two columns) --}}
+                        <div class="grid gap-5 min-[501px]:grid-cols-2">
+                            <div>
+                                <label for="email" class="mb-1.5 block text-sm font-medium text-ink">ইমেইল <span class="text-faint">(ঐচ্ছিক)</span></label>
+                                <input type="email" id="email" name="email" maxlength="255"
+                                    value="{{ old('email', $frontendUser?->email ?? '') }}"
+                                    placeholder="example@email.com"
+                                    class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                                @error('email')
+                                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="phone" class="mb-1.5 block text-sm font-medium text-ink">ফোন <span class="text-faint">(ঐচ্ছিক)</span></label>
+                                <input type="text" id="phone" name="phone" maxlength="20"
+                                    value="{{ old('phone', $frontendUser?->phone ?? '') }}"
+                                    placeholder="01XXXXXXXXX"
+                                    class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                                @error('phone')
+                                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Message --}}
+                        <div>
+                            <label for="body" class="mb-1.5 block text-sm font-medium text-ink">বার্তা <span class="text-red-500">*</span></label>
+                            <textarea id="body" name="body" rows="5" required maxlength="5000"
+                                placeholder="আপনার বার্তা লিখুন..."
+                                class="w-full resize-none rounded-lg border border-hairline bg-gray-50/50 px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">{{ old('body') }}</textarea>
+                            @error('body')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Submit --}}
+                        <div class="flex justify-end">
+                            <button type="submit" class="rounded-lg bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                                বার্তা পাঠান
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -106,7 +199,7 @@
                         @if (!empty($socials['social_instagram']))
                             <a href="{{ $socials['social_instagram'] }}" target="_blank" rel="noopener" aria-label="ইনস্টাগ্রাম"
                                 class="group flex items-center gap-3 rounded-full border border-hairline bg-white px-6 py-3 text-sm font-medium text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-[#e4405f] hover:bg-[#e4405f]/5 hover:text-[#e4405f] hover:shadow-sm">
-                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.415.56.217.96.477 1.38.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.054 1.17-.249 1.805-.413 2.227-.217.56-.477.96-.896 1.381-.42.419-.82.679-1.38.896-.422.164-1.057.36-2.227.413-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.17-.054-1.805-.249-2.227-.413-.56-.217-.96-.477-1.38-.896-.42-.42-.679-.82-.896-1.38-.164-.422-.36-1.057-.413-2.227C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.054-1.17.249-1.805.413-2.227.217-.56.477-.96.896-1.38.42-.42.82-.679 1.38-.896.422-.164 1.057-.36 2.227-.413C8.416 2.175 8.796 2.163 12 2.163zM12 0C8.741 0 8.333.014 7.053.072 5.775.13 4.902.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.902.13 5.775.072 7.053.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.058 1.277.261 2.15.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.763.297 1.636.5 2.913.558C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c1.277-.058 2.15-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.338 1.384-2.126.297-.763.5-1.636.558-2.913.058-1.28.072-1.688.072-4.948s-.014-3.668-.072-4.948c-.058-1.277-.261-2.15-.558-2.913-.306-.789-.717-1.459-1.384-2.126C21.32 1.347 20.651.935 19.86.63c-.763-.297-1.636-.5-2.913-.558C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.415.56.217.96.477 1.38.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.054 1.17-.249 1.805-.413 2.227-.217.56-.477.96-.896 1.381-.42.419-.82.679-1.38.896-.422.164-1.057.36-2.227.413-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.17-.054-1.805-.249-2.227-.413-.56-.217-.96-.477-1.38-.896-.42-.42-.679-.82-.896-1.38-.164-.422-.36-1.057-.413-2.227C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.054-1.17.249-1.805.413-2.227.217-.56.477-.96.896-1.38.42-.42.82-.679 1.38-.896.422-.164 1.057-.36 2.227-.413C8.416 2.175 8.796 2.163 12 2.163zM12 0C8.741 0 8.333.014 7.053.072 5.775.13 4.902.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.902.13 5.775.072 7.053.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.058 1.277.261 2.15.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.763.297 1.636.5 2.913.558C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c1.277-.058 2.15-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.338 1.384-2.126.297-.763.5-1.636.558-2.913.058-1.28.072-1.688.072-4.948s-.014-3.668-.072-4.948c-.058-1.277-.261-2.15-.558-2.913-.306-.789-.717-1.459-1.384-2.126C21.32 1.347 20.651.935 19.86.63c-.763-.297-1.636.5-2.913-.558C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                 ইনস্টাগ্রাম
                             </a>
                         @endif
@@ -129,4 +222,10 @@
             </div>
         </section>
     @endif
+
+    <script>
+        $(document).ready(function() {
+            $('#flash-message').delay(4000).fadeOut(300);
+        });
+    </script>
 @endsection

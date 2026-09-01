@@ -113,12 +113,4 @@ class HomeController extends Controller
             'comments' => $comments,
         ]);
     }
-
-    public function contact(): Response
-    {
-        return response()->view('contact', [
-            'navItems' => buildNavbarItems(),
-            'activeNav' => 'যোগাযোগ',
-        ]);
-    }
 }

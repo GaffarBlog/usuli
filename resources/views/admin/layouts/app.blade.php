@@ -118,6 +118,17 @@
             </a>
             @endif
 
+            @if (has_permission('admin.contacts.index') || Auth::user()->Role?->name === 'Super Admin')
+            <a href="{{ route('admin.contacts.index') }}" class="{{ str_starts_with($currentRoute, 'admin.contacts') ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.contacts') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                যোগাযোগ
+            </a>
+            @endif
+
             @if (has_permission('admin.users.view') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.users.view') }}" class="{{ str_starts_with($currentRoute, 'admin.users') ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.users') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">

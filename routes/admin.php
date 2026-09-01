@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CommentController as AdminCommentController;
+use App\Http\Controllers\admin\ContactController as AdminContactController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\PermissionController;
@@ -96,5 +97,12 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
         Route::get('/{comment}', 'show')->name('show');
         Route::post('/{comment}/reply', 'reply')->name('reply');
         Route::delete('/{comment}', 'destroy')->name('destroy');
+    });
+
+    // Contacts
+    Route::controller(AdminContactController::class)->prefix('contacts')->name('admin.contacts.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{contact}', 'show')->name('show');
+        Route::delete('/{contact}', 'destroy')->name('destroy');
     });
 });
