@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, Post $post): Response
+    public function store(Request $request, Post $post)
     {
         $validated = $request->validate([
             'body' => 'required|string|max:2000',
@@ -26,6 +25,6 @@ class CommentController extends Controller
             'parent_id' => $validated['parent_id'] ?? null,
         ]);
 
-        return redirect()->route('blog.show', $post->slug)->with('success', 'আপনার মন্তব্য সফলভাবে পোস্ট করা হয়েছে।');
+        return back()->with('success', 'আপনার মন্তব্য সফলভাবে পোস্ট করা হয়েছে।');
     }
 }

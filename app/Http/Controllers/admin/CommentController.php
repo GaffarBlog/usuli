@@ -47,7 +47,7 @@ class CommentController extends Controller
         ]);
     }
 
-    public function reply(Request $request, Comment $comment): Response
+    public function reply(Request $request, Comment $comment)
     {
         $validated = $request->validate([
             'body' => 'required|string|max:2000',
