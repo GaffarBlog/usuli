@@ -376,6 +376,10 @@ if (! function_exists('buildNavbarItems')) {
                 return ['label' => $item['label'] ?? 'গল্প', 'href' => '/blog'];
             }
 
+            if ($type === 'about') {
+                return ['label' => $item['label'] ?? 'আমাদের সম্পর্কে', 'href' => '/about'];
+            }
+
             $catId = $item['category_id'] ?? null;
             $cat = $categories->get($catId);
 

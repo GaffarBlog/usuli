@@ -51,6 +51,14 @@ class HomeController extends Controller
         ]);
     }
 
+    public function about(): Response
+    {
+        return response()->view('about', [
+            'navItems' => buildNavbarItems(),
+            'activeNav' => 'আমাদের সম্পর্কে',
+        ]);
+    }
+
     public function blog(Request $request): Response
     {
         $categorySlug = $request->input('category');
