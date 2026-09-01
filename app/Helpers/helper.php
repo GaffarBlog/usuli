@@ -251,28 +251,28 @@ if (! function_exists('upload_file')) {
             File::makeDirectory($basePath, 0755, true);
         }
 
+        // Get original file extension
+        $extension = $file->getClientOriginalExtension() ?: 'bin';
+
         // Generate unique file name
         if ($image_name) {
             $image_name = Str::slug($image_name);
-            $webpFileName = "{$image_name}.webp";
+            $fileName = "{$image_name}.{$extension}";
             $counter = 1;
-            while (File::exists("{$basePath}/{$webpFileName}")) {
-                $webpFileName = "{$image_name}-{$counter}.webp";
+            while (File::exists("{$basePath}/{$fileName}")) {
+                $fileName = "{$image_name}-{$counter}.{$extension}";
                 $counter++;
             }
         } else {
-            $webpFileName = Str::uuid().'.webp';
+            $fileName = Str::uuid().".{$extension}";
         }
 
-        // Save as WebP directly
-        Image::load($file->getPathname())
-            ->format('webp')
-            ->quality(80)
-            ->save("{$basePath}/{$webpFileName}");
+        // Store original file
+        $file->move($basePath, $fileName);
 
-        $webpPath = "storage/uploads/{$folder}/{$webpFileName}";
+        $filePath = "storage/uploads/{$folder}/{$fileName}";
 
-        return asset($webpPath);
+        return asset($filePath);
     }
 }
 if (! function_exists('translate')) {
