@@ -27,9 +27,10 @@ class SettingController extends Controller
         }
 
         $navbarItems = json_decode($settings['navbar_items'] ?? '[]', true);
+        $footerMenuItems = json_decode($settings['footer_menu_items'] ?? '[]', true);
         $categories = Category::active()->topLevel()->orderBy('name')->get();
 
-        return view('admin.settings.index', compact('settings', 'heroPost', 'featurePost', 'navbarItems', 'categories'));
+        return view('admin.settings.index', compact('settings', 'heroPost', 'featurePost', 'navbarItems', 'footerMenuItems', 'categories'));
     }
 
     public function update(Request $request, SettingService $service)
@@ -87,6 +88,29 @@ class SettingController extends Controller
             $service->set('navbar_items', json_encode($validated), 'text');
 
             return redirect()->route('admin.settings.index', ['tab' => 'navbar'])->with('success', 'নেভার মেনু সংরক্ষিত হয়েছে।');
+        }
+
+        if ($tab === 'footer') {
+            $request->validate([
+                'footer_slogan' => 'nullable|string|max:500',
+                'footer_copyright' => 'nullable|string|max:500',
+            ]);
+
+            $service->set('footer_slogan', $request->footer_slogan, 'text');
+            $service->set('footer_copyright', $request->footer_copyright, 'text');
+
+            $items = $request->input('footer_menu_items', []);
+
+            $validated = collect($items)->map(function ($item) {
+                return [
+                    'label' => $item['label'] ?? '',
+                    'url' => $item['url'] ?? '/',
+                ];
+            })->toArray();
+
+            $service->set('footer_menu_items', json_encode($validated), 'text');
+
+            return redirect()->route('admin.settings.index', ['tab' => 'footer'])->with('success', 'ফুটার সেটিংস সংরক্ষিত হয়েছে।');
         }
 
         if ($tab === 'social') {

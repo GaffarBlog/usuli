@@ -168,15 +168,20 @@
                     @endif
                     <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-footer-ink max-[620px]:text-[1.55rem]">উসুলি</span>
                 </a>
-                <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">বাংলায় গল্প, ভাবনা ও মানুষের কথা।</p>
+                <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">{{ GetSetting('footer_slogan') ?: 'বাংলায় গল্প, ভাবনা ও মানুষের কথা।' }}</p>
             </div>
 
             <nav class="flex flex-col gap-3.5 pt-1.5" aria-label="ফুটার নেভিগেশন">
-                <a href="{{ route('home.index') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">প্রচ্ছদ</a>
-                <a href="{{ route('blog') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">গল্প</a>
-                <a href="#" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">আমাদের সম্পর্কে</a>
-                <a href="{{ route('contact') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">যোগাযোগ</a>
-                <a href="#" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">গোপনীয়তা</a>
+                @php
+                    $footerMenu = json_decode(GetSetting('footer_menu_items') ?? '[]', true);
+                @endphp
+                @forelse ($footerMenu as $footerItem)
+                    <a href="{{ $footerItem['url'] ?? '#' }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">{{ $footerItem['label'] ?? '' }}</a>
+                @empty
+                    <a href="{{ route('home.index') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">প্রচ্ছদ</a>
+                    <a href="{{ route('blog') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">গল্প</a>
+                    <a href="{{ route('contact') }}" class="w-fit text-[0.98rem] transition-colors duration-300 hover:text-[#4fb6cf]">যোগাযোগ</a>
+                @endforelse
             </nav>
 
             <div class="flex gap-3 pt-1.5" aria-label="সামাজিক মাধ্যম">
@@ -222,7 +227,7 @@
         </div>
 
         <div class="shell border-t border-white/10 py-6">
-            <p class="text-[0.88rem]">© ২০২৬ উসুলি। সর্বস্বত্ব সংরক্ষিত।</p>
+            <p class="text-[0.88rem]">{{ GetSetting('footer_copyright') ?: '© ২০২৬ উসুলি। সর্বস্বত্ব সংরক্ষিত।' }}</p>
         </div>
     </footer>
 

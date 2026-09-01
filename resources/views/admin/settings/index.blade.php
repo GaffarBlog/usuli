@@ -439,6 +439,111 @@
                 </div>
             </form>
 
+        @elseif ($activeTab === 'footer')
+            <div class="space-y-6 rounded-xl border border-hairline bg-white p-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-ink">ফুটার সেটিংস</h2>
+                    <p class="text-sm text-faint">ফুটারের স্লোগান, মেনু এবং কপিরাইট পরিচালনা করুন।</p>
+                </div>
+
+                <form id="footerForm" method="POST" action="{{ route('admin.settings.update', ['tab' => 'footer']) }}">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="tab" value="footer">
+
+                    {{-- Footer Slogan --}}
+                    <div>
+                        <label for="footer_slogan" class="mb-1.5 block text-sm font-medium text-ink">ফুটার স্লোগান</label>
+                        <input type="text" id="footer_slogan" name="footer_slogan" value="{{ old('footer_slogan', $settings['footer_slogan'] ?? '') }}"
+                            class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" placeholder="ফুটারের স্লোগান লিখুন">
+                        @error('footer_slogan')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Footer Menu Items --}}
+                    <div class="mt-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <label class="mb-1.5 block text-sm font-medium text-ink">ফুটার মেনু</label>
+                                <p class="text-xs text-faint">ড্র্যাগ করে মেনুর অর্ডার পরিবর্তন করুন।</p>
+                            </div>
+                            <button type="button" id="addFooterLinkBtn"
+                                class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                                লিংক যোগ করুন
+                            </button>
+                        </div>
+
+                        {{-- Add Custom Link Form --}}
+                        <div id="addFooterLinkModal" class="hidden mt-3">
+                            <div class="rounded-lg border border-hairline bg-gray-50 p-4 space-y-3">
+                                <div class="grid gap-3 sm:grid-cols-2">
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-ink">লেবেল</label>
+                                        <input type="text" id="footerLinkLabel" placeholder="মেনু টেক্সট"
+                                            class="w-full rounded-md border border-hairline bg-white px-3 py-2 text-sm text-ink outline-none focus:border-brand focus:ring-1 focus:ring-brand/20">
+                                    </div>
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-ink">লিংক</label>
+                                        <input type="text" id="footerLinkUrl" placeholder="/page-slug"
+                                            class="w-full rounded-md border border-hairline bg-white px-3 py-2 text-sm text-ink outline-none focus:border-brand focus:ring-1 focus:ring-brand/20">
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" id="saveFooterLink" class="inline-flex items-center gap-1.5 rounded-md bg-brand px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-deep">যোগ করুন</button>
+                                    <button type="button" id="cancelFooterLink" class="text-xs text-faint hover:text-ink">বাতিল করুন</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="footerMenuItemsJson" name="footer_menu_items_json" value="{{ json_encode($footerMenuItems) }}">
+
+                        <ul id="footerMenuList" class="mt-3 space-y-2">
+                            @forelse ($footerMenuItems as $index => $item)
+                                <li class="footer-menu-item flex items-center gap-3 rounded-lg border border-hairline bg-white px-4 py-3 transition-colors hover:border-brand/40"
+                                    data-index="{{ $index }}">
+                                    <span class="sortable-handle cursor-grab text-faint hover:text-ink">
+                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8-14a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+                                    </span>
+                                    <input type="text" class="footer-menu-label flex-1 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
+                                        value="{{ $item['label'] ?? '' }}" placeholder="মেনু টেক্সট">
+                                    <input type="text" class="footer-menu-url w-40 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
+                                        value="{{ $item['url'] ?? '/' }}" placeholder="/path">
+                                    <button type="button" class="remove-footer-menu-item shrink-0 rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500" title="মুছে ফেলুন">
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                                    </button>
+                                </li>
+                            @empty
+                                <li class="py-8 text-center text-sm text-faint">কোনো মেনু আইটেম নেই। "লিংক যোগ করুন" বাটনে ক্লিক করুন।</li>
+                            @endforelse
+                        </ul>
+                    </div>
+
+                    {{-- Footer Copyright --}}
+                    <div class="mt-6">
+                        <label for="footer_copyright" class="mb-1.5 block text-sm font-medium text-ink">কপিরাইট টেক্সট</label>
+                        <input type="text" id="footer_copyright" name="footer_copyright" value="{{ old('footer_copyright', $settings['footer_copyright'] ?? '') }}"
+                            class="w-full rounded-lg border border-hairline bg-gray-50/50 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" placeholder="© ২০২৬ উসুলি। সর্বস্বত্ব সংরক্ষিত।">
+                        @error('footer_copyright')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Buttons --}}
+                    <div class="flex items-center gap-3 pt-4 mt-4 border-t border-hairline">
+                        <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                <polyline points="17 21 17 13 7 13 7 21" />
+                                <polyline points="7 3 7 8 15 8" />
+                            </svg>
+                            সংরক্ষণ করুন
+                        </button>
+                    </div>
+                </form>
+            </div>
+
         @else
             {{-- Placeholder for other tabs --}}
             <div class="rounded-xl border border-hairline bg-white p-12 text-center">
@@ -685,6 +790,82 @@
 
             initPostSearch('heroSearchInput', 'heroSearchResults', 'heroPostId', 'heroPostSelected', 'heroPostSearch');
             initPostSearch('featureSearchInput', 'featureSearchResults', 'featurePostId', 'featurePostSelected', 'featurePostSearch');
+
+            {{-- ========== Footer Menu Logic ========== --}}
+            if ($('#footerMenuList').length) {
+                var footerSortable = new Sortable(document.getElementById('footerMenuList'), {
+                    handle: '.sortable-handle',
+                    animation: 150,
+                    ghostClass: 'opacity-40',
+                    onEnd: function() {
+                        syncFooterForm();
+                    }
+                });
+
+                function syncFooterForm() {
+                    var items = [];
+                    $('#footerMenuList .footer-menu-item').each(function() {
+                        var $el = $(this);
+                        items.push({
+                            label: $el.find('.footer-menu-label').val(),
+                            url: $el.find('.footer-menu-url').val()
+                        });
+                    });
+                    $('#footerMenuItemsJson').val(JSON.stringify(items));
+                }
+
+                $('#footerForm').on('submit', function() {
+                    syncFooterForm();
+                    var items = JSON.parse($('#footerMenuItemsJson').val() || '[]');
+                    var $form = $(this);
+                    $.each(items, function(i, item) {
+                        $form.append('<input type="hidden" name="footer_menu_items[' + i + '][label]" value="' + (item.label || '') + '">');
+                        $form.append('<input type="hidden" name="footer_menu_items[' + i + '][url]" value="' + (item.url || '') + '">');
+                    });
+                });
+
+                $('#footerMenuList').on('click', '.remove-footer-menu-item', function() {
+                    $(this).closest('.footer-menu-item').fadeOut(200, function() {
+                        $(this).remove();
+                        syncFooterForm();
+                    });
+                });
+
+                $('#addFooterLinkBtn').on('click', function() {
+                    $('#addFooterLinkModal').removeClass('hidden');
+                    $('#footerLinkLabel').focus();
+                });
+
+                $('#cancelFooterLink').on('click', function() {
+                    $('#addFooterLinkModal').addClass('hidden');
+                    $('#footerLinkLabel').val('');
+                    $('#footerLinkUrl').val('');
+                });
+
+                $('#saveFooterLink').on('click', function() {
+                    var label = $('#footerLinkLabel').val().trim();
+                    var url = $('#footerLinkUrl').val().trim() || '/';
+                    if (!label) {
+                        $('#footerLinkLabel').focus();
+                        return;
+                    }
+
+                    var index = $('#footerMenuList .footer-menu-item').length;
+                    var html = '<li class="footer-menu-item flex items-center gap-3 rounded-lg border border-hairline bg-white px-4 py-3 transition-colors hover:border-brand/40" data-index="' + index + '">' +
+                        '<span class="sortable-handle cursor-grab text-faint hover:text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8-14a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg></span>' +
+                        '<input type="text" class="footer-menu-label flex-1 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" value="' + label.replace(/"/g, '&quot;') + '">' +
+                        '<input type="text" class="footer-menu-url w-40 rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" value="' + url.replace(/"/g, '&quot;') + '">' +
+                        '<button type="button" class="remove-footer-menu-item shrink-0 rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500" title="মুছে ফেলুন"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
+                        '</li>';
+
+                    $('#footerMenuList').append(html);
+                    syncFooterForm();
+
+                    $('#footerLinkLabel').val('');
+                    $('#footerLinkUrl').val('');
+                    $('#addFooterLinkModal').addClass('hidden');
+                });
+            }
         });
 
         function clearHeroPost() {
