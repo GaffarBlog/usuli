@@ -47,23 +47,18 @@
         </div>
     </section>
 
-    <!-- ============ FEATURED IMAGE ============ -->
-    @if ($post->image)
-        <section class="pb-[clamp(32px,4vw,52px)]">
-            <div class="shell">
-                <figure class="reveal overflow-hidden rounded-[14px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
-                    <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="eager" class="ph-img h-full w-full object-cover" style="aspect-ratio: 16/9;">
-                </figure>
-            </div>
-        </section>
-    @endif
-
     <!-- ============ ARTICLE CONTENT + SIDEBAR ============ -->
     <article class="pb-[clamp(48px,6vw,88px)]">
         <div class="shell">
             <div class="flex flex-col gap-[clamp(32px,4vw,56px)] min-[901px]:flex-row">
                 {{-- Main Content --}}
                 <div class="min-w-0 flex-1">
+                    @if ($post->image)
+                        <figure class="reveal mb-[clamp(24px,3vw,40px)] overflow-hidden rounded-[14px] bg-[linear-gradient(150deg,#2f8fa6,#1c525f)]">
+                            <img src="{{ $post->image }}" alt="{{ $post->title }}" loading="eager" class="ph-img h-full w-full object-cover" style="aspect-ratio: 16/9;">
+                        </figure>
+                    @endif
+
                     <div class="mx-auto max-w-[72ch]">
                         <div class="prose prose-lg prose-headings:font-serif prose-headings:text-ink prose-p:text-body prose-p:leading-[1.85] prose-a:text-brand-deep prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg">
                             {!! $post->content !!}
