@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\CommentController as AdminCommentController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\PermissionController;
@@ -87,5 +88,13 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin')->group(function (
         Route::get('/{category}/edit', 'edit')->name('edit');
         Route::put('/{category}', 'update')->name('update');
         Route::delete('/{category}', 'destroy')->name('destroy');
+    });
+
+    // Comments
+    Route::controller(AdminCommentController::class)->prefix('comments')->name('admin.comments.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{comment}', 'show')->name('show');
+        Route::post('/{comment}/reply', 'reply')->name('reply');
+        Route::delete('/{comment}', 'destroy')->name('destroy');
     });
 });

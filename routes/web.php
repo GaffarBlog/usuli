@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,10 @@ Route::middleware(['web'])->group(function () {
         Route::get('/blog/{post:slug}', 'show')->name('blog.show');
         Route::get('/contact', 'contact')->name('contact');
     });
+
+    Route::post('/blog/{post:slug}/comment', [CommentController::class, 'store'])
+        ->name('blog.comment.store')
+        ->middleware('auth:frontend');
 
     Route::controller(AuthController::class)->middleware('guest:frontend')->group(function () {
         Route::get('/login', 'showLogin')->name('frontend.login');

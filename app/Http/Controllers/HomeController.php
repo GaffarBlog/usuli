@@ -99,11 +99,18 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
+        $comments = $post->comments()
+            ->whereNull('parent_id')
+            ->with(['user', 'replies.user', 'replies.admin'])
+            ->latest()
+            ->get();
+
         return response()->view('post', [
             'navItems' => buildNavbarItems(),
             'activeNav' => $post->category?->name ?? 'গল্প',
             'post' => $post,
             'related' => $related,
+            'comments' => $comments,
         ]);
     }
 

@@ -108,6 +108,16 @@
             </a>
             @endif
 
+            @if (has_permission('admin.comments.index') || Auth::user()->Role?->name === 'Super Admin')
+            <a href="{{ route('admin.comments.index') }}" class="{{ str_starts_with($currentRoute, 'admin.comments') ? $menuItemActive : $menuItem }}">
+                <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.comments') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                মন্তব্য
+            </a>
+            @endif
+
             @if (has_permission('admin.users.view') || Auth::user()->Role?->name === 'Super Admin')
             <a href="{{ route('admin.users.view') }}" class="{{ str_starts_with($currentRoute, 'admin.users') ? $menuItemActive : $menuItem }}">
                 <svg class="{{ $navIcon }} {{ str_starts_with($currentRoute, 'admin.users') ? 'text-[#4fb6cf]' : '' }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
