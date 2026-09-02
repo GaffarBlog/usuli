@@ -93,6 +93,54 @@ class SettingController extends Controller
             return redirect()->route('admin.settings.index', ['tab' => 'navbar'])->with('success', 'নেভার মেনু সংরক্ষিত হয়েছে।');
         }
 
+        if ($tab === 'about') {
+            $request->validate([
+                'about_hero_label' => 'nullable|string|max:255',
+                'about_hero_title' => 'nullable|string|max:255',
+                'about_hero_subtitle' => 'nullable|string|max:1000',
+                'about_mission_title' => 'nullable|string|max:255',
+                'about_mission_p1' => 'nullable|string|max:2000',
+                'about_mission_p2' => 'nullable|string|max:2000',
+                'about_values_title' => 'nullable|string|max:255',
+                'about_story_title' => 'nullable|string|max:255',
+                'about_story_p1' => 'nullable|string|max:2000',
+                'about_story_p2' => 'nullable|string|max:2000',
+                'about_story_p3' => 'nullable|string|max:2000',
+                'about_cta_title' => 'nullable|string|max:255',
+                'about_cta_subtitle' => 'nullable|string|max:1000',
+                'about_cta_register_btn' => 'nullable|string|max:255',
+                'about_cta_contact_btn' => 'nullable|string|max:255',
+            ]);
+
+            $service->set('about_hero_label', $request->about_hero_label, 'string');
+            $service->set('about_hero_title', $request->about_hero_title, 'string');
+            $service->set('about_hero_subtitle', $request->about_hero_subtitle, 'text');
+            $service->set('about_mission_title', $request->about_mission_title, 'string');
+            $service->set('about_mission_p1', $request->about_mission_p1, 'text');
+            $service->set('about_mission_p2', $request->about_mission_p2, 'text');
+            $service->set('about_values_title', $request->about_values_title, 'string');
+            $service->set('about_story_title', $request->about_story_title, 'string');
+            $service->set('about_story_p1', $request->about_story_p1, 'text');
+            $service->set('about_story_p2', $request->about_story_p2, 'text');
+            $service->set('about_story_p3', $request->about_story_p3, 'text');
+            $service->set('about_cta_title', $request->about_cta_title, 'string');
+            $service->set('about_cta_subtitle', $request->about_cta_subtitle, 'text');
+            $service->set('about_cta_register_btn', $request->about_cta_register_btn, 'string');
+            $service->set('about_cta_contact_btn', $request->about_cta_contact_btn, 'string');
+
+            $values = $request->input('about_values', []);
+            $validated = collect($values)->map(function ($item) {
+                return [
+                    'title' => $item['title'] ?? '',
+                    'description' => $item['description'] ?? '',
+                    'icon' => in_array($item['icon'] ?? '', ['book', 'users', 'globe', 'heart', 'star', 'lightbulb']) ? $item['icon'] : 'book',
+                ];
+            })->toArray();
+            $service->set('about_values', json_encode($validated), 'text');
+
+            return redirect()->route('admin.settings.index', ['tab' => 'about'])->with('success', 'আমাদের সম্পর্কে পেজ সংরক্ষিত হয়েছে।');
+        }
+
         if ($tab === 'footer') {
             $request->validate([
                 'footer_slogan' => 'nullable|string|max:500',

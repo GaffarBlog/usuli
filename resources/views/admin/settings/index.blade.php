@@ -9,7 +9,7 @@
             'site' => 'সাইট সেটিংস',
             'home' => 'হোম পেজ',
             'navbar' => 'নেভার',
-            'contact' => 'যোগাযোগ পেজ',
+            'about' => 'আমাদের সম্পর্কে',
             'footer' => 'ফুটার',
             'social' => 'সোশ্যাল মিডিয়া',
         ];
@@ -362,6 +362,250 @@
                     </div>
                 </form>
             </div>
+
+        @elseif ($activeTab === 'about')
+            <form method="POST" action="{{ route('admin.settings.update', ['tab' => 'about']) }}" class="space-y-6 rounded-xl border border-hairline bg-white p-6">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="tab" value="about">
+
+                <h2 class="text-lg font-semibold text-ink">আমাদের সম্পর্কে পেজ সেটিংস</h2>
+                <p class="text-sm text-faint">আমাদের সম্পর্কে পেজের বিষয়বস্তু পরিচালনা করুন।</p>
+
+                {{-- Hero Section --}}
+                <div class="rounded-lg border border-hairline bg-gray-50/50 p-5 space-y-4">
+                    <h3 class="text-base font-semibold text-ink">হিরো সেকশন</h3>
+
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="about_hero_label" class="mb-1.5 block text-sm font-medium text-ink">লেবেল</label>
+                            <input type="text" id="about_hero_label" name="about_hero_label" value="{{ old('about_hero_label', $settings['about_hero_label'] ?? '') }}"
+                                class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="আমাদের সম্পর্কে">
+                            @error('about_hero_label')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="about_hero_title" class="mb-1.5 block text-sm font-medium text-ink">শিরোনাম</label>
+                            <input type="text" id="about_hero_title" name="about_hero_title" value="{{ old('about_hero_title', $settings['about_hero_title'] ?? '') }}"
+                                class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="উসুলি কী?">
+                            @error('about_hero_title')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="about_hero_subtitle" class="mb-1.5 block text-sm font-medium text-ink">উপশিরোনাম</label>
+                        <textarea id="about_hero_subtitle" name="about_hero_subtitle" rows="2"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="উসুলি হলো বাংলা সাহিত্যের একটি অনলাইন জার্নাল...">{{ old('about_hero_subtitle', $settings['about_hero_subtitle'] ?? '') }}</textarea>
+                        @error('about_hero_subtitle')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Mission Section --}}
+                <div class="rounded-lg border border-hairline bg-gray-50/50 p-5 space-y-4">
+                    <h3 class="text-base font-semibold text-ink">লক্ষ্য সেকশন</h3>
+
+                    <div>
+                        <label for="about_mission_title" class="mb-1.5 block text-sm font-medium text-ink">শিরোনাম</label>
+                        <input type="text" id="about_mission_title" name="about_mission_title" value="{{ old('about_mission_title', $settings['about_mission_title'] ?? '') }}"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="আমাদের লক্ষ্য">
+                        @error('about_mission_title')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="about_mission_p1" class="mb-1.5 block text-sm font-medium text-ink">অনুচ্ছেদ ১</label>
+                        <textarea id="about_mission_p1" name="about_mission_p1" rows="3"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="প্রথম অনুচ্ছেদ...">{{ old('about_mission_p1', $settings['about_mission_p1'] ?? '') }}</textarea>
+                        @error('about_mission_p1')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="about_mission_p2" class="mb-1.5 block text-sm font-medium text-ink">অনুচ্ছেদ ২</label>
+                        <textarea id="about_mission_p2" name="about_mission_p2" rows="3"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="দ্বিতীয় অনুচ্ছেদ...">{{ old('about_mission_p2', $settings['about_mission_p2'] ?? '') }}</textarea>
+                        @error('about_mission_p2')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Values Section --}}
+                <div class="rounded-lg border border-hairline bg-gray-50/50 p-5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base font-semibold text-ink">মূল্যবোধ সেকশন</h3>
+                        <button type="button" id="addValueBtn"
+                            class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                            মূল্যবোধ যোগ করুন
+                        </button>
+                    </div>
+
+                    <div>
+                        <label for="about_values_title" class="mb-1.5 block text-sm font-medium text-ink">শিরোনাম</label>
+                        <input type="text" id="about_values_title" name="about_values_title" value="{{ old('about_values_title', $settings['about_values_title'] ?? '') }}"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="আমাদের মূল্যবোধ">
+                        @error('about_values_title')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <input type="hidden" id="aboutValuesJson" name="about_values_json" value="{{ $settings['about_values'] ?? '[]' }}">
+
+                    <ul id="valuesList" class="space-y-3">
+                        @php
+                            $values = json_decode($settings['about_values'] ?? '[]', true) ?: [
+                                ['title' => 'সাহিত্যচর্চা', 'description' => 'গল্প, কবিতা, প্রবন্ধ ও বিভিন্ন ধরনের সাহিত্যকর্মকে একটি একক মঞ্চে এনে তোলা।', 'icon' => 'book'],
+                                ['title' => 'সম্প্রদায়', 'description' => 'পাঠক ও লেখকদের মধ্যে সংলাপ ও সম্পর্ক গড়ে তোলা।', 'icon' => 'users'],
+                                ['title' => 'সর্বজনীনতা', 'description' => 'সকলের জন্য উন্মুক্ত, যে কেউ পড়তে ও লিখতে পারবেন।', 'icon' => 'globe'],
+                            ];
+                        @endphp
+                        @forelse ($values as $index => $value)
+                            <li class="value-item rounded-lg border border-hairline bg-white px-4 py-4 transition-colors hover:border-brand/40" data-index="{{ $index }}">
+                                <div class="grid gap-3 sm:grid-cols-2">
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-ink">শিরোনাম</label>
+                                        <input type="text" class="value-title w-full rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
+                                            value="{{ $value['title'] ?? '' }}" placeholder="মূল্যবোধের নাম">
+                                    </div>
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-ink">আইকন</label>
+                                        <select class="value-icon w-full rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">
+                                            <option value="book" {{ ($value['icon'] ?? '') === 'book' ? 'selected' : '' }}>বই (book)</option>
+                                            <option value="users" {{ ($value['icon'] ?? '') === 'users' ? 'selected' : '' }}>ব্যক্তি (users)</option>
+                                            <option value="globe" {{ ($value['icon'] ?? '') === 'globe' ? 'selected' : '' }}>গ্লোব (globe)</option>
+                                            <option value="heart" {{ ($value['icon'] ?? '') === 'heart' ? 'selected' : '' }}>হৃদয় (heart)</option>
+                                            <option value="star" {{ ($value['icon'] ?? '') === 'star' ? 'selected' : '' }}>তারা (star)</option>
+                                            <option value="lightbulb" {{ ($value['icon'] ?? '') === 'lightbulb' ? 'selected' : '' }}>বাতি (lightbulb)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <label class="mb-1 block text-xs font-medium text-ink">বিবরণ</label>
+                                    <textarea class="value-description w-full rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20"
+                                        rows="2" placeholder="মূল্যবোধের বিবরণ">{{ $value['description'] ?? '' }}</textarea>
+                                </div>
+                                <div class="mt-2 flex justify-end">
+                                    <button type="button" class="remove-value-item rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500" title="মুছে ফেলুন">
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                                    </button>
+                                </div>
+                            </li>
+                        @empty
+                            <li class="py-4 text-center text-sm text-faint">কোনো মূল্যবোধ নেই। "মূল্যবোধ যোগ করুন" বাটনে ক্লিক করুন।</li>
+                        @endforelse
+                    </ul>
+                </div>
+
+                {{-- Story Section --}}
+                <div class="rounded-lg border border-hairline bg-gray-50/50 p-5 space-y-4">
+                    <h3 class="text-base font-semibold text-ink">গল্প সেকশন</h3>
+
+                    <div>
+                        <label for="about_story_title" class="mb-1.5 block text-sm font-medium text-ink">শিরোনাম</label>
+                        <input type="text" id="about_story_title" name="about_story_title" value="{{ old('about_story_title', $settings['about_story_title'] ?? '') }}"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="আমাদের গল্প">
+                        @error('about_story_title')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="about_story_p1" class="mb-1.5 block text-sm font-medium text-ink">অনুচ্ছেদ ১</label>
+                        <textarea id="about_story_p1" name="about_story_p1" rows="3"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="প্রথম অনুচ্ছেদ...">{{ old('about_story_p1', $settings['about_story_p1'] ?? '') }}</textarea>
+                        @error('about_story_p1')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="about_story_p2" class="mb-1.5 block text-sm font-medium text-ink">অনুচ্ছেদ ২</label>
+                        <textarea id="about_story_p2" name="about_story_p2" rows="3"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="দ্বিতীয় অনুচ্ছেদ...">{{ old('about_story_p2', $settings['about_story_p2'] ?? '') }}</textarea>
+                        @error('about_story_p2')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="about_story_p3" class="mb-1.5 block text-sm font-medium text-ink">অনুচ্ছেদ ৩</label>
+                        <textarea id="about_story_p3" name="about_story_p3" rows="3"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="তৃতীয় অনুচ্ছেদ...">{{ old('about_story_p3', $settings['about_story_p3'] ?? '') }}</textarea>
+                        @error('about_story_p3')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- CTA Section --}}
+                <div class="rounded-lg border border-hairline bg-gray-50/50 p-5 space-y-4">
+                    <h3 class="text-base font-semibold text-ink">CTA সেকশন</h3>
+
+                    <div>
+                        <label for="about_cta_title" class="mb-1.5 block text-sm font-medium text-ink">শিরোনাম</label>
+                        <input type="text" id="about_cta_title" name="about_cta_title" value="{{ old('about_cta_title', $settings['about_cta_title'] ?? '') }}"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="সাহিত্য কি আপনার প্রাণ?">
+                        @error('about_cta_title')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="about_cta_subtitle" class="mb-1.5 block text-sm font-medium text-ink">উপশিরোনাম</label>
+                        <textarea id="about_cta_subtitle" name="about_cta_subtitle" rows="2"
+                            class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20"
+                            placeholder="আমাদের সঙ্গে যুক্ত হতে চাইলে...">{{ old('about_cta_subtitle', $settings['about_cta_subtitle'] ?? '') }}</textarea>
+                        @error('about_cta_subtitle')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="about_cta_register_btn" class="mb-1.5 block text-sm font-medium text-ink">রেজিস্ট্রেশন বাটন টেক্সট</label>
+                            <input type="text" id="about_cta_register_btn" name="about_cta_register_btn" value="{{ old('about_cta_register_btn', $settings['about_cta_register_btn'] ?? '') }}"
+                                class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="নিবন্ধন করুন">
+                            @error('about_cta_register_btn')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="about_cta_contact_btn" class="mb-1.5 block text-sm font-medium text-ink">যোগাযোগ বাটন টেক্সট</label>
+                            <input type="text" id="about_cta_contact_btn" name="about_cta_contact_btn" value="{{ old('about_cta_contact_btn', $settings['about_cta_contact_btn'] ?? '') }}"
+                                class="w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand/20" placeholder="যোগাযোগ করুন">
+                            @error('about_cta_contact_btn')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Buttons --}}
+                <div class="flex items-center gap-3 pt-4 border-t border-hairline">
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-deep">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        সংরক্ষণ করুন
+                    </button>
+                </div>
+            </form>
 
         @elseif ($activeTab === 'social')
             <form method="POST" action="{{ route('admin.settings.update', ['tab' => 'social']) }}" class="space-y-6 rounded-xl border border-hairline bg-white p-6">
@@ -914,7 +1158,69 @@
             }
         });
 
-        function clearHeroPost() {
+            {{-- ========== About Values Logic ========== --}}
+            if ($('#valuesList').length) {
+                function syncValuesForm() {
+                    var items = [];
+                    $('#valuesList .value-item').each(function() {
+                        var $el = $(this);
+                        items.push({
+                            title: $el.find('.value-title').val(),
+                            description: $el.find('.value-description').val(),
+                            icon: $el.find('.value-icon').val()
+                        });
+                    });
+                    $('#aboutValuesJson').val(JSON.stringify(items));
+                }
+
+                $('#aboutForm, form').last().on('submit', function() {
+                    if ($('#valuesList').length) {
+                        syncValuesForm();
+                        var items = JSON.parse($('#aboutValuesJson').val() || '[]');
+                        var $form = $(this);
+                        $.each(items, function(i, item) {
+                            $form.append('<input type="hidden" name="about_values[' + i + '][title]" value="' + (item.title || '').replace(/"/g, '&quot;') + '">');
+                            $form.append('<input type="hidden" name="about_values[' + i + '][description]" value="' + (item.description || '').replace(/"/g, '&quot;') + '">');
+                            $form.append('<input type="hidden" name="about_values[' + i + '][icon]" value="' + (item.icon || 'book') + '">');
+                        });
+                    }
+                });
+
+                $('#valuesList').on('click', '.remove-value-item', function() {
+                    $(this).closest('.value-item').fadeOut(200, function() {
+                        $(this).remove();
+                        syncValuesForm();
+                    });
+                });
+
+                $('#addValueBtn').on('click', function() {
+                    var index = $('#valuesList .value-item').length;
+                    var html = '<li class="value-item rounded-lg border border-hairline bg-white px-4 py-4 transition-colors hover:border-brand/40" data-index="' + index + '">' +
+                        '<div class="grid gap-3 sm:grid-cols-2">' +
+                        '<div><label class="mb-1 block text-xs font-medium text-ink">শিরোনাম</label>' +
+                        '<input type="text" class="value-title w-full rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" value="" placeholder="মূল্যবোধের নাম"></div>' +
+                        '<div><label class="mb-1 block text-xs font-medium text-ink">আইকন</label>' +
+                        '<select class="value-icon w-full rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20">' +
+                        '<option value="book">বই (book)</option><option value="users">ব্যক্তি (users)</option><option value="globe">গ্লোব (globe)</option>' +
+                        '<option value="heart">হৃদয় (heart)</option><option value="star">তারা (star)</option><option value="lightbulb">বাতি (lightbulb)</option></select></div>' +
+                        '</div>' +
+                        '<div class="mt-3"><label class="mb-1 block text-xs font-medium text-ink">বিবরণ</label>' +
+                        '<textarea class="value-description w-full rounded-md border border-hairline bg-gray-50/50 px-3 py-1.5 text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-white focus:ring-1 focus:ring-brand/20" rows="2" placeholder="মূল্যবোধের বিবরণ"></textarea></div>' +
+                        '<div class="mt-2 flex justify-end"><button type="button" class="remove-value-item rounded-lg p-1.5 text-faint transition-colors hover:bg-red-50 hover:text-red-500" title="মুছে ফেলুন">' +
+                        '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div></li>';
+
+                    $('#valuesList').append(html);
+                    syncValuesForm();
+                });
+
+                $('#valuesList').on('change', '.value-title, .value-description, .value-icon', function() {
+                    syncValuesForm();
+                });
+
+                syncValuesForm();
+            }
+
+            function clearHeroPost() {
             $('#heroPostId').val('');
             $('#heroPostSelected').hide().empty();
             $('#heroPostSearch').show();

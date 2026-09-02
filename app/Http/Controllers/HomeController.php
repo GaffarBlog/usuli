@@ -53,9 +53,33 @@ class HomeController extends Controller
 
     public function about(): Response
     {
+        $aboutValues = json_decode(GetSetting('about_values') ?? '[]', true) ?: [
+            ['title' => 'সাহিত্যচর্চা', 'description' => 'গল্প, কবিতা, প্রবন্ধ ও বিভিন্ন ধরনের সাহিত্যকর্মকে একটি একক মঞ্চে এনে তোলা।', 'icon' => 'book'],
+            ['title' => 'সম্প্রদায়', 'description' => 'পাঠক ও লেখকদের মধ্যে সংলাপ ও সম্পর্ক গড়ে তোলা।', 'icon' => 'users'],
+            ['title' => 'সর্বজনীনতা', 'description' => 'সকলের জন্য উন্মুক্ত, যে কেউ পড়তে ও লিখতে পারবেন।', 'icon' => 'globe'],
+        ];
+
         return response()->view('about', [
             'navItems' => buildNavbarItems(),
             'activeNav' => 'আমাদের সম্পর্কে',
+            'about' => [
+                'hero_label' => GetSetting('about_hero_label') ?: 'আমাদের সম্পর্কে',
+                'hero_title' => GetSetting('about_hero_title') ?: 'উসুলি কী?',
+                'hero_subtitle' => GetSetting('about_hero_subtitle') ?: 'উসুলি হলো বাংলা সাহিত্যের একটি অনলাইন জার্নাল, যেখানে গল্প, ভাবনা ও মানুষের কথা একত্রিত হয়।',
+                'mission_title' => GetSetting('about_mission_title') ?: 'আমাদের লক্ষ্য',
+                'mission_p1' => GetSetting('about_mission_p1') ?: 'উসুলির জন্ম হয়েছে বাংলা সাহিত্যকে সমৃদ্ধ করার একটি সাধারণ কামনা থেকে। আমরা বিশ্বাস করি, বাংলা ভাষায় লেখালেখির একটি সমৃদ্ধ ঐতিহ্য রয়েছে, এবং ডিজিটাল যুগে সেই ঐতিহ্যকে নতুন মানুষের কাছে পৌঁছে দেওয়া আমাদের দায়িত্ব।',
+                'mission_p2' => GetSetting('about_mission_p2') ?: 'আমরা চাই যেন নতুন ও পুরনো লেখক, পাঠক ও সাহিত্যঅনুরাগীরা একটি জায়গায় একত্রিত হতে পারেন। গল্প পড়তে, লিখতে, এবং সাহিত্য নিয়ে কথা বলতে পারেন।',
+                'values_title' => GetSetting('about_values_title') ?: 'আমাদের মূল্যবোধ',
+                'values' => $aboutValues,
+                'story_title' => GetSetting('about_story_title') ?: 'আমাদের গল্প',
+                'story_p1' => GetSetting('about_story_p1') ?: 'উসুলি শুরু হয়েছিল একটি ছোট প্রকল্প হিসেবে। কয়েকজন লেখক ও সাহিত্যানুরাগী মিলে একটি এমন প্ল্যাটফর্ম তৈরি করার স্বপ্ন দেখেছিলেন, যেখানে বাংলা সাহিত্য নতুন উচ্চতায় পৌঁছাতে পারে।',
+                'story_p2' => GetSetting('about_story_p2') ?: 'আজ উসুলি একটি ক্রমবর্ধমান সাহিত্যিক সম্প্রদায়ে রূপান্তরিত হয়েছে। এখানে অভিজ্ঞ লেখকদের পাশাপাশি নতুন লেখকরাও তাদের সৃষ্টি পাঠকের কাছে পৌঁছে দিতে পারেন।',
+                'story_p3' => GetSetting('about_story_p3') ?: 'আমাদের বিশ্বাস — ভালো সাহিত্য সীমানা ভেঙে যায়, এবং উসুলি সেই সীমানা ভাঙতে সাহায্য করতে চায়।',
+                'cta_title' => GetSetting('about_cta_title') ?: 'সাহিত্য কি আপনার প্রাণ?',
+                'cta_subtitle' => GetSetting('about_cta_subtitle') ?: 'আমাদের সঙ্গে যুক্ত হতে চাইলে এখনই নিবন্ধন করুন অথবা যোগাযোগ করুন।',
+                'cta_register_btn' => GetSetting('about_cta_register_btn') ?: 'নিবন্ধন করুন',
+                'cta_contact_btn' => GetSetting('about_cta_contact_btn') ?: 'যোগাযোগ করুন',
+            ],
         ]);
     }
 
