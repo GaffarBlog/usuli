@@ -13,7 +13,7 @@
                 @endif
                 <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-footer-ink max-[620px]:text-[1.55rem]">উসুলি</span>
             </a>
-            <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">{{ GetSetting('footer_slogan') ?: 'বাংলায় গল্প, ভাবনা ও মানুষের কথা।' }}</p>
+            <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">{{ GetSetting('footer_slogan') ?: 'উসুলি - নুসুস• ফাহমুস-সালাফ।' }}</p>
         </div>
 
         <nav class="flex flex-col gap-3.5 pt-1.5" aria-label="ফুটার নেভিগেশন">
@@ -31,21 +31,24 @@
 
         <div class="flex gap-3 pt-1.5" aria-label="সামাজিক মাধ্যম">
             @if (!empty(GetSetting('social_facebook')))
-                <a href="{{ GetSetting('social_facebook') }}" target="_blank" rel="noopener" aria-label="ফেসবুক" class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
+                <a href="{{ GetSetting('social_facebook') }}" target="_blank" rel="noopener" aria-label="ফেসবুক"
+                    class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
                     <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
                         <path d="M14 9V7c0-1 .3-1.5 1.6-1.5H17V2.5h-2.4C11.9 2.5 11 4 11 6.3V9H8.5v3H11v9.5h3V12h2.2l.4-3H14z" />
                     </svg>
                 </a>
             @endif
             @if (!empty(GetSetting('social_twitter')))
-                <a href="{{ GetSetting('social_twitter') }}" target="_blank" rel="noopener" aria-label="এক্স" class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
+                <a href="{{ GetSetting('social_twitter') }}" target="_blank" rel="noopener" aria-label="এক্স"
+                    class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
                     <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
                         <path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.3-5.6L6.4 21H3.3l7-8L2.6 3h6l3.9 5.1L17.5 3zm-1 16h1.6L7.6 4.6H5.9L16.5 19z" />
                     </svg>
                 </a>
             @endif
             @if (!empty(GetSetting('social_instagram')))
-                <a href="{{ GetSetting('social_instagram') }}" target="_blank" rel="noopener" aria-label="ইনস্টাগ্রাম" class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
+                <a href="{{ GetSetting('social_instagram') }}" target="_blank" rel="noopener" aria-label="ইনস্টাগ্রাম"
+                    class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
                     <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
                         <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
                         <circle cx="12" cy="12" r="4" />
@@ -54,7 +57,8 @@
                 </a>
             @endif
             @if (!empty(GetSetting('social_youtube')))
-                <a href="{{ GetSetting('social_youtube') }}" target="_blank" rel="noopener" aria-label="ইউটিউব" class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
+                <a href="{{ GetSetting('social_youtube') }}" target="_blank" rel="noopener" aria-label="ইউটিউব"
+                    class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
                     <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
                         <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
                         <path d="M10 9.2l5 2.8-5 2.8V9.2z" fill="currentColor" stroke="none" />
@@ -62,9 +66,11 @@
                 </a>
             @endif
             @if (!empty(GetSetting('social_telegram')))
-                <a href="{{ GetSetting('social_telegram') }}" target="_blank" rel="noopener" aria-label="টেলিগ্রাম" class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
+                <a href="{{ GetSetting('social_telegram') }}" target="_blank" rel="noopener" aria-label="টেলিগ্রাম"
+                    class="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-footer-mut transition-colors duration-300 hover:border-[#4fb6cf] hover:bg-[#4fb6cf]/12 hover:text-white">
                     <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        <path
+                            d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
                     </svg>
                 </a>
             @endif

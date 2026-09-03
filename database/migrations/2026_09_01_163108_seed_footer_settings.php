@@ -10,7 +10,7 @@ return new class extends Migration
         $settings = [
             [
                 'key' => 'footer_slogan',
-                'value' => 'বাংলায় গল্প, ভাবনা ও মানুষের কথা।',
+                'value' => 'উসুলি - নুসুস• ফাহমুস-সালাফ।',
                 'type' => 'text',
                 'created_at' => now(),
                 'updated_at' => now(),

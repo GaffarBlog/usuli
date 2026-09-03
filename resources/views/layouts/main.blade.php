@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('title', 'উসুলি — বাংলায় গল্প, ভাবনা ও মানুষের কথা')</title>
+    <title>@yield('title', 'উসুলি — উসুলি - নুসুস• ফাহমুস-সালাফ')</title>
     <meta name="description" content="@yield('description', 'উসুলি একটি স্বাধীন বাংলা ডিজিটাল জার্নাল—নির্বাচিত গল্প, ভাবনা ও মানুষের কথা।')">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,7 +170,7 @@
                     @endif
                     <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-footer-ink max-[620px]:text-[1.55rem]">উসুলি</span>
                 </a>
-                <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">{{ GetSetting('footer_slogan') ?: 'বাংলায় গল্প, ভাবনা ও মানুষের কথা।' }}</p>
+                <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">{{ GetSetting('footer_slogan') ?: 'উসুলি - নুসুস• ফাহমুস-সালাফ।' }}</p>
             </div>
 
             <nav class="flex flex-col gap-3.5 pt-1.5" aria-label="ফুটার নেভিগেশন">
