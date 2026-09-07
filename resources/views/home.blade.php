@@ -228,7 +228,7 @@
                         $siteLogo = GetSetting('site_logo');
                     @endphp
                     @if ($siteLogo)
-                        <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[45px] w-auto shrink-0 object-contain">
+                        <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[150px] w-auto shrink-0 object-contain">
                     @else
                         <svg class="h-[45px] w-[30px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
                             <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
