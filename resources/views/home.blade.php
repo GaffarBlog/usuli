@@ -118,11 +118,9 @@
     <section class="relative isolate flex min-h-[clamp(420px,56vw,560px)] items-center" aria-labelledby="featureTitle">
         <div class="ph absolute inset-0 -z-10 overflow-hidden bg-[linear-gradient(120deg,#12333b,#1f6d80)]">
             @if ($featurePost && $featurePost->image)
-                <img src="{{ $featurePost->image }}" alt="{{ $featurePost->title }}" loading="lazy"
-                    class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+                <img src="{{ $featurePost->image }}" alt="{{ $featurePost->title }}" loading="lazy" class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
             @elseif ($homeBanner)
-                <img src="{{ $homeBanner }}" alt="ব্যানার" loading="lazy"
-                    class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+                <img src="{{ $homeBanner }}" alt="ব্যানার" loading="lazy" class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
             @else
                 <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=72" alt="ভোরের নদী ও তীরে জেগে ওঠা জনপদ" loading="lazy"
                     class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
@@ -231,11 +229,11 @@
                     </svg>
                 </div>
                 <h2 class="mb-3.5 font-serif text-[clamp(1.6rem,3vw,2.3rem)] font-semibold tracking-[-0.005em] text-ink" id="nlTitle">
-                    নতুন লেখা আপনার ইনবক্সে
+                    নতুন লেখা পেতে সাবস্ক্রাইব করুন
                 </h2>
-                <p class="mx-auto mb-[30px] max-w-[48ch] text-[1.08rem] leading-[1.8] text-body">
+                {{-- <p class="mx-auto mb-[30px] max-w-[48ch] text-[1.08rem] leading-[1.8] text-body">
                     নির্বাচিত বাংলা গল্প, ভাবনা ও নতুন লেখার খবর পেতে আমাদের সঙ্গে থাকুন।
-                </p>
+                </p> --}}
                 <form id="newsletterForm" class="mx-auto flex max-w-[520px] gap-3 max-[620px]:flex-col" novalidate>
                     <label class="sr-only" for="nlEmail">আপনার ইমেইল</label>
                     <input id="nlEmail" type="email" name="email" placeholder="আপনার ইমেইল" autocomplete="email"
