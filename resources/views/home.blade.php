@@ -16,10 +16,10 @@
     <section class="pb-[clamp(48px,6vw,88px)] pt-[clamp(40px,6vw,78px)]" aria-labelledby="heroTitle">
         <div class="shell grid items-center gap-8 min-[861px]:grid-cols-[1fr_1.05fr] min-[861px]:gap-[clamp(32px,5vw,68px)]">
             @if ($heroPost)
-                <figure class="reveal group relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] min-[861px]:aspect-[5/4]">
+                <figure class="reveal ph group relative block h-full overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] ">
                     @if ($heroPost->image)
                         <img src="{{ $heroPost->image }}" alt="{{ $heroPost->title }}" loading="eager"
-                            class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
+                            class="ph-img absolute inset-0 h-auto w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
                     @endif
                 </figure>
 
