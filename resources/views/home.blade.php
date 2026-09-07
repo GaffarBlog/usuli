@@ -224,9 +224,19 @@
         <div class="shell">
             <div class="reveal relative overflow-hidden rounded-[14px] border border-brand-line bg-brand-soft px-[clamp(24px,5vw,40px)] py-[clamp(40px,6vw,72px)] text-center">
                 <div class="mb-5 flex justify-center" aria-hidden="true">
-                    <svg class="h-[50px] w-[34px] overflow-visible" viewBox="0 0 60 90">
-                        <path d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" fill="none" stroke="#2b8ca4" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
-                    </svg>
+                    @php
+                        $siteLogo = GetSetting('site_logo');
+                    @endphp
+                    @if ($siteLogo)
+                        <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[45px] w-auto shrink-0 object-contain">
+                    @else
+                        <svg class="h-[45px] w-[30px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
+                            <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
+                                d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" fill="none" stroke="#2b8ca4" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" fill="none" stroke="#2b8ca4"
+                                stroke-width="4" stroke-linecap="round" />
+                        </svg>
+                    @endif
                 </div>
                 <h2 class="mb-3.5 font-serif text-[clamp(1.6rem,3vw,2.3rem)] font-semibold tracking-[-0.005em] text-ink" id="nlTitle">
                     নতুন লেখা পেতে সাবস্ক্রাইব করুন
