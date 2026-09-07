@@ -50,6 +50,6 @@ php artisan make:model Category -mcr                # model + migration + contro
 - **`translate()` helper** calls `TranslationService` which doesn't exist yet — will throw if invoked. Avoid using it.
 - **`GetSetting()` / `GetSettingGroup()`** depend on `SettingService` which does exist (`app/Services/SettingService.php`). Safe to use.
 - **`CLAUDE.md`** is the Laravel Boost install prompt only, not project instructions.
-- **Site layout is self-contained**: `site.blade.php` does NOT extend another layout — it IS the layout. Public views use `@extends('layouts.site')` and `@section('content')`.
+- **Site layout is self-contained**: `site.blade.php` does NOT extend another layout — it IS the layout. Public views use `@extends('layouts.main')` and `@section('content')`.
 - **Dashboard layout** extends `site.blade.php` and adds tab navigation via `@section('tab-content')`.
 - **jQuery 4.0** loaded from CDN in layouts for interactions (dropdowns, mobile menu, scroll reveal). No Alpine.js or Livewire.

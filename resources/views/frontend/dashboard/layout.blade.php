@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('layouts.main')
 
 @section('content')
     @php
@@ -58,12 +58,12 @@
     </div>
 
     @push('scripts')
-    <script>
-        $(function() {
-            setTimeout(function() {
-                $('#flash-message').fadeOut(300);
-            }, 4000);
-        });
-    </script>
+        <script>
+            $(function() {
+                setTimeout(function() {
+                    $('#flash-message').fadeOut(300);
+                }, 4000);
+            });
+        </script>
     @endpush
 @endsection
