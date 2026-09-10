@@ -16,10 +16,10 @@
     <section class="pb-[clamp(48px,6vw,88px)] pt-[clamp(40px,6vw,78px)]" aria-labelledby="heroTitle">
         <div class="shell grid items-center gap-8 min-[861px]:grid-cols-[1fr_1.05fr] min-[861px]:gap-[clamp(32px,5vw,68px)]">
             @if ($heroPost)
-                <figure class="reveal group relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] min-[861px]:aspect-[5/4]">
+                <figure class="reveal ph group relative block h-full overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,#2f93ab,#123a44)] ">
                     @if ($heroPost->image)
                         <img src="{{ $heroPost->image }}" alt="{{ $heroPost->title }}" loading="eager"
-                            class="ph-img absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
+                            class="ph-img absolute inset-0 h-auto w-full object-cover opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none">
                     @endif
                 </figure>
 
@@ -224,16 +224,26 @@
         <div class="shell">
             <div class="reveal relative overflow-hidden rounded-[14px] border border-brand-line bg-brand-soft px-[clamp(24px,5vw,40px)] py-[clamp(40px,6vw,72px)] text-center">
                 <div class="mb-5 flex justify-center" aria-hidden="true">
-                    <svg class="h-[50px] w-[34px] overflow-visible" viewBox="0 0 60 90">
-                        <path d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" fill="none" stroke="#2b8ca4" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
-                    </svg>
+                    @php
+                        $siteLogo = GetSetting('site_logo');
+                    @endphp
+                    @if ($siteLogo)
+                        <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[150px] w-auto shrink-0 object-contain">
+                    @else
+                        <svg class="h-[45px] w-[30px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
+                            <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
+                                d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" fill="none" stroke="#2b8ca4" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="M41 9 C 36 24 30 33 31 46 C 32 57 44 60 47 69 C 49 76 42 83 30 82 C 20 81 13 74 12 64" fill="none" stroke="#2b8ca4"
+                                stroke-width="4" stroke-linecap="round" />
+                        </svg>
+                    @endif
                 </div>
                 <h2 class="mb-3.5 font-serif text-[clamp(1.6rem,3vw,2.3rem)] font-semibold tracking-[-0.005em] text-ink" id="nlTitle">
-                    নতুন লেখা আপনার ইনবক্সে
+                    নতুন লেখা পেতে সাবস্ক্রাইব করুন
                 </h2>
-                <p class="mx-auto mb-[30px] max-w-[48ch] text-[1.08rem] leading-[1.8] text-body">
+                {{-- <p class="mx-auto mb-[30px] max-w-[48ch] text-[1.08rem] leading-[1.8] text-body">
                     নির্বাচিত বাংলা গল্প, ভাবনা ও নতুন লেখার খবর পেতে আমাদের সঙ্গে থাকুন।
-                </p>
+                </p> --}}
                 <form id="newsletterForm" class="mx-auto flex max-w-[520px] gap-3 max-[620px]:flex-col" novalidate>
                     <label class="sr-only" for="nlEmail">আপনার ইমেইল</label>
                     <input id="nlEmail" type="email" name="email" placeholder="আপনার ইমেইল" autocomplete="email"

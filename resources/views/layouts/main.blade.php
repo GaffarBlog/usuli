@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('title', 'উসুলি — উসুলি - নুসুস• ফাহমুস-সালাফ')</title>
-    <meta name="description" content="@yield('description', 'উসুলি একটি স্বাধীন বাংলা ডিজিটাল জার্নাল—নির্বাচিত গল্প, ভাবনা ও মানুষের কথা।')">
+    <title>@yield('title', 'উসুলি - নুসুস• ফাহমুস-সালাফ')</title>
+    <meta name="description" content="@yield('description', 'নুসুস • ফাহমুস-সালাফ')">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,7 @@
         <div class="shell flex h-[76px] items-center justify-between gap-6">
             <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
                 @if ($siteLogo)
-                    <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[45px] w-auto shrink-0 object-contain">
+                    <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[55px] w-auto shrink-0 object-contain">
                 @else
                     <svg class="h-[45px] w-[30px] shrink-0 overflow-visible" viewBox="0 0 60 90" aria-hidden="true" focusable="false">
                         <path class="[stroke-dasharray:240] [stroke-dashoffset:240] animate-draw motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]" d="{{ $brandMarkPath }}" fill="none" stroke="#2b8ca4" stroke-width="6.5"
@@ -46,7 +46,7 @@
                         <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="{{ $brandAccentPath }}" fill="none" stroke="#2b8ca4" stroke-width="4" stroke-linecap="round" />
                     </svg>
                 @endif
-                <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-ink max-[620px]:text-[1.55rem]">উসুলি</span>
+                {{-- <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-ink max-[620px]:text-[1.55rem]">উসুলি</span> --}}
             </a>
 
             <nav class="mx-auto hidden min-[1001px]:block" aria-label="প্রধান নেভিগেশন">
@@ -168,7 +168,7 @@
                             <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="{{ $brandAccentPath }}" fill="none" stroke="#4fb6cf" stroke-width="4" stroke-linecap="round" />
                         </svg>
                     @endif
-                    <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-footer-ink max-[620px]:text-[1.55rem]">উসুলি</span>
+                    {{-- <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-footer-ink max-[620px]:text-[1.55rem]">উসুলি</span> --}}
                 </a>
                 <p class="mt-[18px] max-w-[34ch] font-serif text-[1.02rem] leading-[1.8] text-footer-mut">{{ GetSetting('footer_slogan') ?: 'উসুলি - নুসুস• ফাহমুস-সালাফ।' }}</p>
             </div>
