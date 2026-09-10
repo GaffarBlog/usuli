@@ -1,58 +1,238 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# উসুলি (Usuli)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> নুসুস-ফাহমুস-সালাফ — A Bengali literary journal for publishing and reading Bengali literature including stories, poetry, essays, and other literary works.
 
-## About Laravel
+![Laravel 13](https://img.shields.io/badge/Laravel-13-red)
+![PHP 8.3](https://img.shields.io/badge/PHP-8.3-purple)
+![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Public-Facing Site** — Home, blog, about, contact pages with Bengali UI
+- **Admin Panel** — Full content management at `/admin`
+- **Dual Authentication** — Separate admin and public user systems
+- **Rich Text Editor** — TipTap-powered editor for Bengali content
+- **Role-Based Access Control** — Granular permission management
+- **Threaded Comments** — Nested comment system on posts
+- **Writer Requests** — Public users can request writer status
+- **Image Processing** — WebP conversion via spatie/image
+- **Settings Management** — Dynamic site configuration from database
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack
 
-## Learning Laravel
+| Component | Technology |
+|---|---|
+| Backend | Laravel 13 |
+| PHP | 8.3+ |
+| CSS | Tailwind CSS 4 |
+| Build Tool | Vite 8 |
+| Rich Text Editor | TipTap 3 |
+| JavaScript | jQuery 4.0 |
+| Testing | Pest 4 |
+| Image Processing | spatie/image |
+| Database | SQLite (default) |
+| Fonts | Noto Sans Bengali + Noto Serif Bengali |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.3 or higher
+- Composer
+- Node.js and npm
+- SQLite (default; no external database server needed)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Installation
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 1. Clone the Repository
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/your-username/usuli.git
+cd usuli
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Run the Setup Command
 
-## Contributing
+This single command handles everything:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer setup
+```
 
-## Code of Conduct
+This automatically:
+1. Installs PHP dependencies (`composer install`)
+2. Copies `.env.example` to `.env`
+3. Generates the application encryption key
+4. Runs all database migrations (auto-creates SQLite database)
+5. Installs Node.js dependencies
+6. Builds frontend assets with Vite
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Start Development Server
 
-## Security Vulnerabilities
+```bash
+composer dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+This starts three concurrent processes:
+- PHP development server (`artisan serve`)
+- Queue listener (`artisan queue:listen`)
+- Vite dev server
+
+Visit [http://localhost:8000](http://localhost:8000)
+
+## Default Credentials
+
+### Admin Panel
+
+- **URL**: `/admin`
+- **Email**: `admin@gmail.com`
+- **Password**: `123456`
+
+> A default Super Admin user is automatically created on first visit to the login page if no users exist.
+
+## Project Structure
+
+```
+usuli/
+├── app/
+│   ├── Helpers/helper.php          # Global helper functions
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── admin/              # Admin controllers (11)
+│   │   │   ├── Auth/               # Authentication controllers
+│   │   │   └── ...                 # Public controllers
+│   │   └── Middleware/
+│   │       ├── AdminMiddleware.php
+│   │       └── FrontendDashboardMiddleware.php
+│   ├── Models/                     # Eloquent models (9)
+│   └── Services/SettingService.php
+├── config/                         # Laravel configuration
+├── database/
+│   ├── migrations/                 # Database migrations (14)
+│   └── seeders/                    # Database seeders
+├── resources/
+│   ├── css/app.css                 # Tailwind v4 theme
+│   ├── js/                         # JavaScript (TipTap)
+│   └── views/
+│       ├── layouts/main.blade.php  # Public site layout
+│       ├── admin/                  # Admin panel views
+│       └── frontend/               # User dashboard views
+├── routes/
+│   ├── web.php                     # Public + frontend auth routes
+│   └── admin.php                   # Admin panel routes
+└── tests/                          # Pest tests
+```
+
+## Architecture
+
+### Dual Authentication System
+
+The application uses two completely separate Laravel guards:
+
+| Guard | Model | Purpose | Middleware |
+|---|---|---|---|
+| `web` | `User` | Admin panel | `AdminMiddleware` |
+| `frontend` | `FrontendUser` | Public site users | `auth:frontend` |
+
+> **Important**: Never mix the two authentication systems. They use separate database tables and models.
+
+### Models & Relationships
+
+| Model | Key Relationships |
+|---|---|
+| **User** | `hasOne` Role |
+| **Role** | `belongsTo` User |
+| **Category** | `belongsTo` Category (parent), `hasMany` Category (children) — hierarchical/nested set |
+| **Post** | `belongsTo` Category, `belongsTo` User (author), `hasMany` Comment |
+| **Comment** | `belongsTo` Post, `belongsTo` FrontendUser, `belongsTo` User (admin), threaded replies |
+| **FrontendUser** | Standalone public user with writer request fields |
+| **Setting** | Key-value store for site configuration |
+| **Contact** | Contact form submissions |
+| **RouteList** | Permission routes for RBAC, hierarchical |
+
+### Routes Overview
+
+**Public Routes** (`routes/web.php`):
+- `/` — Home page
+- `/about` — About page
+- `/blog` — Blog listing with category filters
+- `/blog/{slug}` — Single post view
+- `/contact` — Contact form
+- `/login`, `/register` — Frontend authentication
+- `/dashboard/*` — User dashboard (profile, password, writer request)
+
+**Admin Routes** (`routes/admin.php`):
+- `/admin/login` — Admin login
+- `/admin` — Dashboard
+- `/admin/users/*` — User management
+- `/admin/roles/*` — Role management
+- `/admin/permission/{role_id}` — Permission management
+- `/admin/posts/*` — Post management
+- `/admin/categories/*` — Category management
+- `/admin/comments/*` — Comment management
+- `/admin/contacts/*` — Contact management
+- `/admin/settings/*` — Site settings
+
+## Key Features
+
+### Dynamic Settings
+
+All site configuration is stored in the database and accessible via:
+
+```php
+GetSetting('site_name')      // Get a single setting
+GetSettingsGroup('home_')     // Get settings by prefix
+```
+
+### Global Helpers
+
+| Function | Purpose |
+|---|---|
+| `upload_file($file, $folder, $name)` | Upload files as WebP to `public/storage/uploads/` |
+| `GetSetting($key)` | Get cached setting value (1-hour cache) |
+| `has_permission($route)` | Check admin role permission |
+| `show_image($images, $size, $type)` | Get image URL or placeholder |
+| `delete_files($files, $exclude)` | Delete files from disk |
+| `buildNavbarItems()` | Build public navbar from database settings |
+
+### TipTap Editor
+
+The admin panel uses TipTap for rich text editing with Bengali tooltips and full formatting support (bold, italic, headings, lists, quotes, links, images, alignment, undo/redo).
+
+### Testing
+
+Run the test suite:
+
+```bash
+php artisan test --compact
+# or
+vendor/bin/pest
+# or
+composer test
+```
+
+Tests run against an in-memory SQLite database (configured in `phpunit.xml`).
+
+### Code Style
+
+The project uses Laravel Pint for PHP code formatting. After making PHP changes, run:
+
+```bash
+vendor/bin/pint --dirty --format agent
+```
+
+## Gotchas
+
+1. **`translate()` helper** — Calls `TranslationService` which does not exist yet. Avoid using it.
+2. **Image uploads** — Stored in `public/storage/uploads/`, not Laravel's default `storage/app/public`.
+3. **Role global scope** — The `Role` model hides "Super Admin" from default queries.
+4. **Site layout is self-contained** — `main.blade.php` IS the layout (does not extend another).
+5. **No Alpine.js or Livewire** — All client-side interactivity uses jQuery 4.0.
+6. **Vite manifest error** — Run `npm run build` or `npm run dev` to resolve.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT License
+
+---
+
+**Usuli (উসুলি)** — A platform for Bengali literary expression.
