@@ -51,7 +51,7 @@
 
             <!-- Nav items under logo -->
             <nav class="hidden min-[1001px]:block mt-3" aria-label="প্রধান নেভিগেশন">
-                <ul class="flex gap-[30px]">
+                <ul class="flex gap-3.75">
                     @foreach ($navItems as $item)
                         <li>
                             <a href="{{ $item['href'] ?? '#' }}" class="{{ $item['label'] === ($activeNav ?? '') ? $navLinkActive : $navLink }}">{{ $item['label'] }}</a>
