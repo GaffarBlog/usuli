@@ -35,7 +35,8 @@
 
     <!-- ============ HEADER ============ -->
     <header class="sticky top-0 z-100 border-b border-hairline bg-[rgba(250,250,248,0.82)] backdrop-blur-md backdrop-saturate-[140%]">
-        <div class="shell flex h-[76px] items-center justify-between gap-6">
+        <div class="shell flex flex-col items-center py-4">
+            <!-- Logo centered at top -->
             <a href="{{ route('home.index') }}" aria-label="উসুলি — প্রচ্ছদ" class="inline-flex items-center gap-3">
                 @if ($siteLogo)
                     <img src="{{ $siteLogo }}" alt="{{ GetSetting('site_name') ?? 'উসুলি' }}" class="h-[55px] w-auto shrink-0 object-contain">
@@ -46,10 +47,10 @@
                         <path class="opacity-0 animate-fade-in-late motion-reduce:animate-none motion-reduce:opacity-100" d="{{ $brandAccentPath }}" fill="none" stroke="#2b8ca4" stroke-width="4" stroke-linecap="round" />
                     </svg>
                 @endif
-                {{-- <span class="font-serif text-[1.7rem] font-semibold leading-none tracking-[-0.01em] text-ink max-[620px]:text-[1.55rem]">উসুলি</span> --}}
             </a>
 
-            <nav class="mx-auto hidden min-[1001px]:block" aria-label="প্রধান নেভিগেশন">
+            <!-- Nav items under logo -->
+            <nav class="hidden min-[1001px]:block mt-3" aria-label="প্রধান নেভিগেশন">
                 <ul class="flex gap-[30px]">
                     @foreach ($navItems as $item)
                         <li>
@@ -59,7 +60,8 @@
                 </ul>
             </nav>
 
-            <div class="flex items-center gap-1.5">
+            <!-- Action buttons row -->
+            <div class="flex items-center gap-1.5 mt-3 min-[1001px]:mt-0">
                 <button type="button" aria-label="খুঁজুন" class="grid h-[42px] w-[42px] place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-brand-soft hover:text-brand-deep">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
                         <circle cx="11" cy="11" r="7" />
